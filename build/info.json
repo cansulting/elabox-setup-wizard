@@ -1,0 +1,14 @@
+{
+	"name": "Elabox Setup",
+	"description": "Elabox Setup",
+	"packageId": "ela.setup",
+	"build": 1,
+	"version": "0.1.0",
+	"program": "ela.setup",
+	"programArgs": null,
+	"permissions": [],
+	"exportService": true,
+	"location": "system",
+	"nodejs": false,
+	"packagerVersion": "0.1.0"
+}
