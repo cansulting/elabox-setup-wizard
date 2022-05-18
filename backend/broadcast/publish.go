@@ -1,7 +1,42 @@
 package broadcast
 
-import "github.com/cansulting/elabox-system-tools/foundation/logger"
+import (
+	backend_data "elabox-setup/backend/data"
+	"elabox-setup/backend/global"
+	"strconv"
 
-func PublishError(code int, err string) {
+	"github.com/cansulting/elabox-system-tools/foundation/event/data"
+	"github.com/cansulting/elabox-system-tools/foundation/logger"
+)
+
+// broadcast error to system
+func PublishError(code int, err string) error {
 	logger.GetInstance().Debug().Msg("publish error: " + err)
+	val := `{"code":` + strconv.Itoa(code) + `,"error":"` + err + `"}`
+	_, err2 := global.Controller.RPC.CallBroadcast(data.NewAction(global.BROADCAST_ERROR, global.PACKAGE_ID, val))
+	if err2 != nil {
+		return err2
+	}
+	return nil
+}
+
+// broacast storage changes to system
+func PublishStorageChanged(drives []backend_data.StorageInfo) error {
+	logger.GetInstance().Debug().Msg("Storages devices changed: " + printArry(drives))
+	_, err := global.Controller.RPC.CallBroadcast(data.NewAction(global.BROADCAST_STORAGE_CHANGED, global.PACKAGE_ID, drives))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func printArry(arry []backend_data.StorageInfo) string {
+	if len(arry) == 0 {
+		return ""
+	}
+	val := ""
+	for _, v := range arry {
+		val += v.Model + ","
+	}
+	return val
 }

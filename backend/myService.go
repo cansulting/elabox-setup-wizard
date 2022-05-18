@@ -28,6 +28,7 @@ func (instance *MyService) OnStart() error {
 	global.Controller.RPC.OnRecieved(global.INIT_SETUP, instance.init)
 	global.Controller.RPC.OnRecieved(global.INITDONE_SETUP, instance.initDone)
 	global.Controller.RPC.OnRecieved(global.START_SETUP, instance.setup)
+	global.Controller.RPC.OnRecieved(global.CHECK_SETUP, instance.checkSetup)
 	return nil
 }
 
@@ -72,7 +73,7 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 		if err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "error setup, "+err.Error())
 		}
-		if err := setup_usb.Setup(datam["usb"].(bool)); err != nil {
+		if err := setup_usb.Setup(datam["storage_id"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "external storage setup failed, "+err.Error())
 		}
 		if err := setup_did.Setup(datam["did"].(string)); err != nil {
@@ -81,7 +82,18 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 		if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
 		}
+		if err := SetupSwapping(); err != nil {
+			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
+		}
 	}()
 
 	return rpc.CreateSuccessResponse("success")
+}
+
+func (instance *MyService) checkSetup(client protocol.ClientInterface, action data.Action) string {
+	setup := "setup"
+	if !setup_keystore.WasSetup() {
+		setup = "unsetup"
+	}
+	return rpc.CreateSuccessResponse(setup)
 }
