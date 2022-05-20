@@ -85,6 +85,7 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 		if err := SetupSwapping(); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
 		}
+		broadcast.PublishSetupSuccess()
 	}()
 
 	return rpc.CreateSuccessResponse("success")

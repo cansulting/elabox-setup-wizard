@@ -11,7 +11,7 @@ import (
 
 // broadcast error to system
 func PublishError(code int, err string) error {
-	logger.GetInstance().Debug().Msg("publish error: " + err)
+	logger.GetInstance().Error().Msg("publish error: " + err)
 	val := `{"code":` + strconv.Itoa(code) + `,"error":"` + err + `"}`
 	_, err2 := global.Controller.RPC.CallBroadcast(data.NewAction(global.BROADCAST_ERROR, global.PACKAGE_ID, val))
 	if err2 != nil {
@@ -28,6 +28,15 @@ func PublishStorageChanged(drives []backend_data.StorageInfo) error {
 		return err
 	}
 	return nil
+}
+
+func PublishSetupSuccess() error {
+	logger.GetInstance().Debug().Msg("Setup success")
+	_, err := global.Controller.RPC.CallBroadcast(data.NewActionById(global.BROADCAST_SUCCESS))
+	if err != nil {
+		logger.GetInstance().Error().Err(err).Caller().Msg("setup failed")
+	}
+	return err
 }
 
 func printArry(arry []backend_data.StorageInfo) string {

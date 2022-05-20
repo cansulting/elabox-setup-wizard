@@ -15,7 +15,8 @@ const CHECK_SETUP = "setup.actions.CHECK_SETUP"  // use to check is device was s
 
 // broadcast actions
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed
-const BROADCAST_ERROR = "setup.broadcast.ERROR"                     // broadcast when recieved an error
+const BROADCAST_ERROR = "setup.broadcast.SETUP_ERROR"               // broadcast when recieved an error
+const BROADCAST_SUCCESS = "setup.broadcast.SETUP_SUCCESS"
 
 // setup id
 const DID = "did"
