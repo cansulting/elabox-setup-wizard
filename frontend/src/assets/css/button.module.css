@@ -27,6 +27,9 @@
     background-color: lightgrey;
     cursor: default;
 }
+.success{
+    border-color: lightgreen;
+}
 .start{
     margin-top: 2em;
 }

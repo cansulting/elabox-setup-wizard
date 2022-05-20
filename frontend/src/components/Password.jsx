@@ -16,14 +16,14 @@ export default function Password({increaseSteps,decreaseSteps}){
     const [pwd2, setPwd2] = useState('');   
     const isValidPassword = validCharacters(pwd1) && validCharacters(pwd2)
     const handleChange = event =>{
-    const { target } = event;
-    const value = target.value;
-    if (target.id === "pwd1") {
-        setPwd1(value)
-    }
-    else {
-        setPwd2(value)
-    }
+        const { target } = event;
+        const value = target.value;
+        if (target.id === "pwd1") {
+            setPwd1(value)
+        }
+        else {
+            setPwd2(value)
+        }
     }
     useEffect(()=>{
         const isValid = atleast6Characters(pwd1) &&  doesNotContainsSpecialCharacters(pwd1) && doesNotContainsSpace(pwd1) && doesPasswordAndConfirmPasswordMatched(pwd1,pwd2)

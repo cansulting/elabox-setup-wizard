@@ -1,27 +1,24 @@
-import { useTransition } from "react"
-import useSetupStore  from "../store/setUp"
+import useDidStore  from "../store/did"
 import DidStyle from "../assets/css/did.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 
 export default function Did({increaseSteps,decreaseSteps}){
-    const [pending,setTransition] = useTransition()
-    const did = useSetupStore(state => state.did)
-    const isProcessingDid = useSetupStore(state => state.isProcessingDid)
-    const processDid = useSetupStore (state => state.processDid)    
+    const did = useDidStore(state => state.did)
+    const isProcessingDid = useDidStore(state => state.isProcessingDid)
+    const processDid = useDidStore (state => state.processDid)    
+    const processDidSignOut = useDidStore (state => state.processDidSignOut)
     const hasDid = did.holder?.length > 0
     const handleDidClick = () => {
         if(!isProcessingDid){
-            setTransition(()=>{
-                processDid()
-            })
+            processDid()
         }
     }
     const handleNextOrSkipClick = () =>{
         if(hasDid){
-            increaseSteps()
-            increaseSteps()
+            increaseSteps(2)
             return;
         }
+        processDidSignOut()
         increaseSteps()
     }
     return <div className={DidStyle['app-did']}>
@@ -32,7 +29,7 @@ export default function Did({increaseSteps,decreaseSteps}){
             With DIDs you can share with any DApps.    
         </p>
         <button 
-        className={`btn btn-secondary ${ButtonStyle['essentials']} ${hasDid ? ButtonStyle['disabled']:''}`} 
+        className={`btn btn-secondary ${ButtonStyle['essentials']} ${hasDid ? ButtonStyle['success']:''}`} 
         disabled={hasDid}
         onClick={handleDidClick}>
             {isProcessingDid && "Open your essentials to confirm your DID"}
@@ -46,8 +43,7 @@ export default function Did({increaseSteps,decreaseSteps}){
                 Previous
             </button>
             <button 
-            className={`btn btn-primary ${ButtonStyle['skip']} ${pending ? ButtonStyle['disabled']:''}`} 
-            disabled={pending}
+            className={`btn btn-primary ${ButtonStyle['skip']}`} 
             onClick={handleNextOrSkipClick}>
                 {hasDid ? "Next":"Skip"}
             </button>            
