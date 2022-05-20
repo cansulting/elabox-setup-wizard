@@ -34,13 +34,13 @@ export default function Password({increaseSteps,decreaseSteps}){
     },[pwd1,pwd2])        
     return <div className={PasswordStyle['app-password']}>
         <h1 className={PasswordStyle['header']}>Wallet Password</h1>
-        <p>
+        <p className={PasswordStyle['intro']}>
             Build, sign and send transactions with securty and trust.
         </p>
         <form>
-            <h3 className={PasswordStyle['header']}>Setup Password</h3>            
+            <h3 className={PasswordStyle['header3']}>Setup Password</h3>            
             <input id="pwd1" className={FormStyle['input']} type="password" onChange={handleChange}/>            
-            <h3 className={PasswordStyle['header']}>Confirm Password</h3>
+            <h3 className={PasswordStyle['header3']}>Confirm Password</h3>
             <input id="pwd2" className={FormStyle['input']} type="password" onChange={handleChange}/>                        
         </form>
         <div className={PasswordStyle['password-requirements']}>

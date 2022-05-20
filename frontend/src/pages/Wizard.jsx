@@ -16,7 +16,7 @@ export default function Wizard(){
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
-            <Logo/>
+            {steps !== 5 && <Logo/>}
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Storage increaseSteps={increaseSteps}/>}
             {steps === 3 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
