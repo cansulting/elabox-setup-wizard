@@ -1,0 +1,14 @@
+.App {
+  background-color: rgb(39, 42, 61);  
+  text-align: center;
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.elabox-logo{
+  height: 10em;
+  width: 10em;
+  margin: 0 auto;
+}

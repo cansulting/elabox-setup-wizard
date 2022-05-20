@@ -1,0 +1,31 @@
+.setup,.skip,.essentials,.prev,.start{
+    margin-top: 5em;
+    width: 15em;
+}
+.group{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.group-flex-end{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.essentials{
+    margin-bottom: 5em;
+}
+.group > button{
+    margin-top: 1em;
+}
+.prev,.skip{
+    width: 6em;
+    text-align: center;
+}
+.disabled {
+    background-color: lightgrey;
+    cursor: default;
+}
+.start{
+    margin-top: 2em;
+}
