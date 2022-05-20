@@ -1,7 +1,7 @@
 export const validCharacters = (str = "") => {
     if (!str || str.length <= 5) return false
     if (str.search(' ') >= 0) return false;
-
+    //eslint-disable-next-line
     const specialChars = /[`^$&()\'\"\[\]{};:\\|,.<>\/]/;
     return !specialChars.test(str);
 }
@@ -12,6 +12,7 @@ export const atleast6Characters = (str = "") => {
 }
 export const doesNotContainsSpecialCharacters = (str = "") =>{
     if(str.trim().length === 0) return false
+    //eslint-disable-next-line
     const specialChars = /[`^$&()\'\"\[\]{};:\\|,.<>\/]/;
     return !specialChars.test(str);   
 }

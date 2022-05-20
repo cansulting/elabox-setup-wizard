@@ -18,7 +18,7 @@ export default function Password({increaseSteps,decreaseSteps}){
     const handleChange = event =>{
     const { target } = event;
     const value = target.value;
-    if (target.id == "pwd1") {
+    if (target.id === "pwd1") {
         setPwd1(value)
     }
     else {

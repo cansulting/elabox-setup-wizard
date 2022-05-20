@@ -5,7 +5,7 @@ import useSetupStore from "../store/setUp"
 
 export default function Storage({increaseSteps}){
     const isExternalStorageConnected = useSetupStore(state=>state.isExternalStorageConnected)
-    const toggleExternalStorageConnected = useSetupStore(state => state.toggleExternalStorageConnected)
+    // const toggleExternalStorageConnected = useSetupStore(state => state.toggleExternalStorageConnected)
     return <div className={StorageStyle['app-storage']}>
         <h1>Connect External Storage</h1>
         <p>Expand your storage for data demanding nodes and services.</p>

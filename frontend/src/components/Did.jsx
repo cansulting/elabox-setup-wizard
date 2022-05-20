@@ -6,12 +6,15 @@ import ButtonStyle from "../assets/css/button.module.css"
 export default function Did({increaseSteps,decreaseSteps}){
     const [pending,setTransition] = useTransition()
     const did = useSetupStore(state => state.did)
+    const isProcessingDid = useSetupStore(state => state.isProcessingDid)
     const processDid = useSetupStore (state => state.processDid)    
-    const hasDid = did.id?.length > 0
+    const hasDid = did.holder?.length > 0
     const handleDidClick = () => {
-        setTransition(()=>{
-            processDid()
-        })
+        if(!isProcessingDid){
+            setTransition(()=>{
+                processDid()
+            })
+        }
     }
     const handleNextOrSkipClick = () =>{
         if(hasDid){
@@ -30,8 +33,11 @@ export default function Did({increaseSteps,decreaseSteps}){
         </p>
         <button 
         className={`btn btn-secondary ${ButtonStyle['essentials']} ${hasDid ? ButtonStyle['disabled']:''}`} 
+        disabled={hasDid}
         onClick={handleDidClick}>
-            {hasDid ? "Connected":"Connect Essentials"}
+            {isProcessingDid && "Open your essentials to confirm your DID"}
+            {hasDid && !isProcessingDid && "Connected"}
+            {!hasDid && !isProcessingDid && "Connect Essentials"}
         </button>
         <div className={ButtonStyle['group']}>
             <button 
@@ -40,7 +46,8 @@ export default function Did({increaseSteps,decreaseSteps}){
                 Previous
             </button>
             <button 
-            className={`btn btn-primary ${ButtonStyle['skip']}`} 
+            className={`btn btn-primary ${ButtonStyle['skip']} ${pending ? ButtonStyle['disabled']:''}`} 
+            disabled={pending}
             onClick={handleNextOrSkipClick}>
                 {hasDid ? "Next":"Skip"}
             </button>            

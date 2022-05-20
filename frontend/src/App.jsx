@@ -1,6 +1,5 @@
 import  { lazy, Suspense } from 'react'
 import Spinner from './components/partials/Spinner'
-import Logo from './components/partials/Logo'
 import useErrorStore from './store/error'
 import './assets/css/App.css'
 

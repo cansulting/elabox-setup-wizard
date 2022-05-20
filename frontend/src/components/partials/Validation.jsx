@@ -7,6 +7,7 @@ export default function Validation({label, validation =()=>{},src}) {
       setIsValid(validation())      
     }
     setIsValid(validation(src))
+    //eslint-disable-next-line
   },Array.isArray(src) ? src:[src])
   const icon = isValid ? <Icon.CheckCircle color="green"/>:<Icon.XCircle color="red"/>
   return (
