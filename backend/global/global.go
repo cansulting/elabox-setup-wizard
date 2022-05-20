@@ -11,7 +11,7 @@ const HOME_DIR = "/home/elabox"
 const INIT_SETUP = "setup.actions.INIT"          // initialize setup
 const INITDONE_SETUP = "setup.actions.INIT_DONE" // done initialize
 const START_SETUP = "setup.actions.START"        // start the setup
-const CHECK_SETUP = "setup.actions.CHECK_SETUP"  // use to check is device was setup or not
+const CHECK_SETUP = "setup.actions.CHECK_STATUS" // use to check is device setup status
 
 // broadcast actions
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed

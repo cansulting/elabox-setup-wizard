@@ -13,6 +13,8 @@ import (
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 )
 
+var settingUp = false
+
 type MyService struct {
 }
 
@@ -28,7 +30,7 @@ func (instance *MyService) OnStart() error {
 	global.Controller.RPC.OnRecieved(global.INIT_SETUP, instance.init)
 	global.Controller.RPC.OnRecieved(global.INITDONE_SETUP, instance.initDone)
 	global.Controller.RPC.OnRecieved(global.START_SETUP, instance.setup)
-	global.Controller.RPC.OnRecieved(global.CHECK_SETUP, instance.checkSetup)
+	global.Controller.RPC.OnRecieved(global.CHECK_SETUP, instance.checkSetupStatus)
 	return nil
 }
 
@@ -65,10 +67,11 @@ func (instance *MyService) initDone(client protocol.ClientInterface, action data
 	return rpc.CreateSuccessResponse("success")
 }
 
-// start setting up the device. requires field with usb, did and keystore
+// start setting up the device. accepts json data with field usb, did and password
 func (instance *MyService) setup(client protocol.ClientInterface, action data.Action) string {
 	go func() {
-		logger.GetInstance().Info().Msg("starting setting up")
+		logger.GetInstance().Info().Msg("start setting up elabox")
+		settingUp = true
 		datam, err := action.DataToMap()
 		if err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "error setup, "+err.Error())
@@ -86,14 +89,17 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
 		}
 		broadcast.PublishSetupSuccess()
+		settingUp = false
 	}()
 
 	return rpc.CreateSuccessResponse("success")
 }
 
-func (instance *MyService) checkSetup(client protocol.ClientInterface, action data.Action) string {
+func (instance *MyService) checkSetupStatus(client protocol.ClientInterface, action data.Action) string {
 	setup := "setup"
-	if !setup_keystore.WasSetup() {
+	if settingUp {
+		setup = "setting_up"
+	} else if !setup_keystore.WasSetup() {
 		setup = "unsetup"
 	}
 	return rpc.CreateSuccessResponse(setup)
