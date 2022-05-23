@@ -12,15 +12,14 @@ export default function SetUp({increaseSteps}){
     const password = usePasswordStore(state => state.password)
     const processSetUp = useSetupStore(state=>state.processSetUp)
     useEffect(()=>{
-        setTimeout(()=>{
-            const data = {
-                did,
-                password,
-                storage_id
-            }
-            processSetUp(data)
-        },5 * 1000)
-    },[increaseSteps])
+        const data = {
+            did,
+            password,
+            storage_id
+        }
+        processSetUp(data)
+        // eslint-disable-next-line        
+    },[])
     return <div className={SetupStyle['app-setup']}>
         <h1>Setting up Elabox</h1>
         <p>Please wait this might take awhile.</p>
