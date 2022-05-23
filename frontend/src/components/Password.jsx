@@ -10,10 +10,14 @@ import Validation from "./partials/Validation"
 import PasswordStyle from "../assets/css/password.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import FormStyle from "../assets/css/form.module.css"
+import usePasswordStore from "../store/password"
 
 export default function Password({increaseSteps,decreaseSteps}){
-    const [pwd1, setPwd1] = useState('');
-    const [pwd2, setPwd2] = useState('');   
+    const [pwd1, setPwd1] = useState('')
+    const [pwd2, setPwd2] = useState('')   
+    const initSetup = usePasswordStore(state => state.initSetup)
+    const closeSetup =  usePasswordStore(state => state.closeSetup)
+    const setPassword = usePasswordStore(state => state.setPassword)
     const isValidPassword = validCharacters(pwd1) && validCharacters(pwd2)
     const handleChange = event =>{
         const { target } = event;
@@ -26,10 +30,16 @@ export default function Password({increaseSteps,decreaseSteps}){
         }
     }
     useEffect(()=>{
+        initSetup()
+        return ()=>{
+            closeSetup()
+        }
+        // eslint-disable-next-line
+    },[])
+    useEffect(()=>{
         const isValid = atleast6Characters(pwd1) &&  doesNotContainsSpecialCharacters(pwd1) && doesNotContainsSpace(pwd1) && doesPasswordAndConfirmPasswordMatched(pwd1,pwd2)
         if (isValid){
-        }
-        else{
+            setPassword(pwd1)
         }
     },[pwd1,pwd2])        
     return <div className={PasswordStyle['app-password']}>

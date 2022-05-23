@@ -31,7 +31,8 @@ export default function Did({increaseSteps,decreaseSteps}){
         return () => {
             closeSetup()
         }
-    },[initSetup,closeSetup])
+        // eslint-disable-next-line
+    },[])
     return <div className={DidStyle['app-did']}>
         <h1>Sign-in with DID</h1>
         <p>

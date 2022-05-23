@@ -1,14 +1,24 @@
 import { useEffect } from 'react';
-// import useErrorStore from '../store/error';
 import SetupStyle from "../assets/css/setup.module.css"
+import useDidStore from '../store/did';
+import usePasswordStore from '../store/password';
+import useSetupStore from '../store/setUp';
+import useStorageStore from '../store/storage';
 import Spinner from './partials/Spinner';
 
 export default function SetUp({increaseSteps}){
-    // const toggleError = useErrorStore(state => state.toggleError);
+    const storage_id = useStorageStore(state => state.storage)
+    const did = useDidStore(state => state.did)
+    const password = usePasswordStore(state => state.password)
+    const processSetUp = useSetupStore(state=>state.processSetUp)
     useEffect(()=>{
         setTimeout(()=>{
-            // toggleError()
-            increaseSteps()
+            const data = {
+                did,
+                password,
+                storage_id
+            }
+            processSetUp(data)
         },5 * 1000)
     },[increaseSteps])
     return <div className={SetupStyle['app-setup']}>

@@ -16,3 +16,8 @@ export const PASSWORD = "password"
 
 // ERROR
 export const USB_LOOKUP_ERR = 101 // issue found while searching for usb
+
+export const SUCCESS_CODE = 200
+export const SYSTEMERR_CODE = 400 // theres something wrong with the system
+export const INVALID_CODE = 401
+export const NOT_IMPLEMENTED = 300 // code was not implemented

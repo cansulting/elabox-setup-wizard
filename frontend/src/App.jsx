@@ -9,10 +9,13 @@ const Wizard = lazy(() => import('./pages/Wizard'))
 
 function App() {
   const initSetup = useSetupStore(state => state.initSetup)
+  const initErrorSetup = useErrorStore (state => state.initSetup)
   const hasError = useErrorStore(state => state.hasError)
   useEffect(()=>{
     initSetup()
-  },[initSetup])
+    initErrorSetup()
+    // eslint-disable-next-line
+  },[])
 
   return (
     <div className="App">

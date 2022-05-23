@@ -1,9 +1,9 @@
-import create from "zustand";
+import create from "zustand"
 import ElaboxEvent from "../utils/ElaboxEvent"
-import * as constant from "../utils/constants"
+import * as constant from "../utils/constant"
 
 const useDidStore = create(set => ({
-    did: {},
+    did: "",
     isProcessingDid: false,
     initSetup: () => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","did")
@@ -23,13 +23,13 @@ const useDidStore = create(set => ({
             const result = presentation.toJSON()
             set(_ => ({ did: result }))            
         } catch (error) {
-            set(_ => ({ did: {} }))                        
+            set(_ => ({ did: "" }))                        
         } finally{
             set(_ => ({ isProcessingDid: false }))
         }
     },
     signOut: async () =>{
-        set(_ => ({ did: {},isProcessingDid:false }))            
+        set(_ => ({ did: "",isProcessingDid:false }))            
     },    
 }))
 

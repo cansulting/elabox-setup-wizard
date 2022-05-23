@@ -18,7 +18,8 @@ export default function Storage({increaseSteps}){
         return () =>{
             closeSetup()
         }
-    },[initSetup,closeSetup])
+        // eslint-disable-next-line
+    },[])
     return <div className={StorageStyle['app-storage']}>
         <h1>Connect External Storage</h1>
         <p>Expand your storage for data demanding nodes and services.</p>
