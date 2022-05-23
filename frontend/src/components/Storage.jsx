@@ -12,6 +12,7 @@ export default function Storage({increaseSteps}){
     const closeSetup = useStorageStore(state=>state.closeSetup)
     const selectStorage = useStorageStore(state=>state.selectStorage)
     const isExternalStorageConnected = storages.length > 0
+    const hasSelectedStorage  = selectedStorage.length > 0
     
     useEffect(()=>{
         initSetup()
@@ -39,7 +40,9 @@ export default function Storage({increaseSteps}){
             onClick={()=>{
                 initDoneSetup()
                 increaseSteps()
-            }}> Skip </button>
+            }}>
+                {hasSelectedStorage ? "Next":"Skip"} 
+            </button>
         </div>
     </div>
 }
