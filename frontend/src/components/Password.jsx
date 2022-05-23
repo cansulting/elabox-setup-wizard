@@ -1,6 +1,5 @@
 import { useState ,useEffect} from "react"
 import {
-    validCharacters, 
     atleast6Characters, 
     doesNotContainsSpecialCharacters , 
     doesNotContainsSpace, 
@@ -18,7 +17,7 @@ export default function Password({increaseSteps,decreaseSteps}){
     const initSetup = usePasswordStore(state => state.initSetup)
     const closeSetup =  usePasswordStore(state => state.closeSetup)
     const setPassword = usePasswordStore(state => state.setPassword)
-    const isValidPassword = validCharacters(pwd1) && validCharacters(pwd2)
+    const isValidPassword = atleast6Characters(pwd1) &&  doesNotContainsSpecialCharacters(pwd1) && doesNotContainsSpace(pwd1) && doesPasswordAndConfirmPasswordMatched(pwd1,pwd2)
     const handleChange = event =>{
         const { target } = event;
         const value = target.value;
