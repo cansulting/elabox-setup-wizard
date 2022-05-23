@@ -1,13 +1,19 @@
-import  { lazy, Suspense } from 'react'
+import  { lazy, Suspense, useEffect } from 'react'
 import Spinner from './components/partials/Spinner'
 import useErrorStore from './store/error'
 import './assets/css/App.css'
+import useSetupStore from './store/setUp'
 
 const Error = lazy(() => import('./pages/Error'))
 const Wizard = lazy(() => import('./pages/Wizard'))
 
 function App() {
+  const initSetup = useSetupStore(state => state.initSetup)
   const hasError = useErrorStore(state => state.hasError)
+  useEffect(()=>{
+    initSetup()
+  },[initSetup])
+
   return (
     <div className="App">
       <Suspense fallback={<Spinner type="dotted"/>}>

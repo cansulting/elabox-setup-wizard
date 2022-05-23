@@ -1,12 +1,16 @@
-import useDidStore  from "../store/did"
+import { useEffect } from "react"
+import useDidStore from "../store/did"
 import DidStyle from "../assets/css/did.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 
 export default function Did({increaseSteps,decreaseSteps}){
     const did = useDidStore(state => state.did)
     const isProcessingDid = useDidStore(state => state.isProcessingDid)
+    const initSetup = useDidStore(state => state.initSetup)
+    const initDoneSetup = useDidStore(state => state.initDoneSetup)
+    const closeSetup = useDidStore(state => state.closeSetup)
     const processDid = useDidStore (state => state.processDid)    
-    const processDidSignOut = useDidStore (state => state.processDidSignOut)
+    const signOut = useDidStore (state => state.signOut)
     const hasDid = did.holder?.length > 0
     const handleDidClick = () => {
         if(!isProcessingDid){
@@ -15,12 +19,19 @@ export default function Did({increaseSteps,decreaseSteps}){
     }
     const handleNextOrSkipClick = () =>{
         if(hasDid){
+            initDoneSetup()
             increaseSteps(2)
             return;
         }
-        processDidSignOut()
+        signOut()
         increaseSteps()
     }
+    useEffect(() => {
+        initSetup()
+        return () => {
+            closeSetup()
+        }
+    },[initSetup,closeSetup])
     return <div className={DidStyle['app-did']}>
         <h1>Sign-in with DID</h1>
         <p>

@@ -1,24 +1,35 @@
 import create from "zustand";
+import ElaboxEvent from "../utils/ElaboxEvent"
+import * as constant from "../utils/constants"
 
 const useDidStore = create(set => ({
     did: {},
     isProcessingDid: false,
+    initSetup: () => {
+        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","did")
+    },
+    initDoneSetup: () => {
+        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","did")
+    },
+    closeSetup: ()=> {
+        ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
+    },
     processDid: async ()=> {
         try {
-            set(state => ({ isProcessingDid: true }));            
+            set(_ => ({ isProcessingDid: true }));            
             const {DIDAuth} = await import("../utils/did")
             const DidAuth = new DIDAuth()   
             const presentation = await DidAuth.signIn()
             const result = presentation.toJSON()
-            set(state => ({ did: result }))            
+            set(_ => ({ did: result }))            
         } catch (error) {
-            set(state => ({ did: {} }))                        
+            set(_ => ({ did: {} }))                        
         } finally{
-            set(state => ({ isProcessingDid: false }))
+            set(_ => ({ isProcessingDid: false }))
         }
     },
-    processDidSignOut: async () =>{
-        set(state => ({ did: {},isProcessingDid:false }))            
+    signOut: async () =>{
+        set(_ => ({ did: {},isProcessingDid:false }))            
     },    
 }))
 

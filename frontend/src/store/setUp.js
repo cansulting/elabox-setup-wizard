@@ -9,7 +9,7 @@ const useSetupStore = create(set => ({
             console.log(args)
         })
     },
-    processSetUp: () => set(state => ({ isetUpCompleted: true })),
+    processSetUp: () => set(_ => ({ isetUpCompleted: true })),
 }))
 
 export default useSetupStore

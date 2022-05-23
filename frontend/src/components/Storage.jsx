@@ -7,16 +7,18 @@ import ButtonStyle from "../assets/css/button.module.css"
 export default function Storage({increaseSteps}){
     const storages = useStorageStore(state=>state.storages)
     const selectedStorage = useStorageStore(state=>state.storage)
-    const initStorageSetUp = useStorageStore(state=>state.initStorageSetUp)
+    const initSetup = useStorageStore(state=>state.initSetup)
+    const initDoneSetup = useStorageStore(state=>state.initDoneSetup)
     const closeSetup = useStorageStore(state=>state.closeSetup)
     const selectStorage = useStorageStore(state=>state.selectStorage)
     const isExternalStorageConnected = storages.length > 0
+    
     useEffect(()=>{
-        initStorageSetUp()
+        initSetup()
         return () =>{
             closeSetup()
         }
-    },[initStorageSetUp,closeSetup])
+    },[initSetup,closeSetup])
     return <div className={StorageStyle['app-storage']}>
         <h1>Connect External Storage</h1>
         <p>Expand your storage for data demanding nodes and services.</p>
@@ -33,7 +35,10 @@ export default function Storage({increaseSteps}){
         <div className={`${ButtonStyle['group-flex-end']}`}>
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 
-            onClick={increaseSteps}> Skip </button>
+            onClick={()=>{
+                initDoneSetup()
+                increaseSteps()
+            }}> Skip </button>
         </div>
     </div>
 }
