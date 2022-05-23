@@ -6,6 +6,13 @@ var Controller *app.Controller
 
 const PACKAGE_ID = "ela.setup"
 const HOME_DIR = "/home/elabox"
+const DID_HASH_PATH = HOME_DIR + "/data/" + PACKAGE_ID + "/did.dat"
+const DID_DATA_DIR = HOME_DIR + "/data/" + PACKAGE_ID
+
+const CLI_DIR_PATH = HOME_DIR + "/apps/ela.mainchain"
+const KEYSTORE_DIR_PATH = HOME_DIR + "/documents/ela.mainchain"
+const OLD_KEYSTORE_DIR_PATH = HOME_DIR + "/data/ela.mainchain" // for old version of keystore
+const KEYSTORE_FILENAME = "keystore.dat"
 
 // actions
 const INIT_SETUP = "setup.actions.INIT"          // initialize setup
