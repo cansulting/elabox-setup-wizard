@@ -6,6 +6,11 @@
 	"version": "0.1.0",
 	"program": "ela.setup",
 	"programArgs": null,
+	"activityGroup": {
+		"customLink": "",
+		"customPort": 0,
+		"activities": null
+	},
 	"permissions": [],
 	"exportService": true,
 	"location": "system",
