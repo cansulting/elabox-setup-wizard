@@ -7,7 +7,7 @@
     "@aw-web-design/react-feather": "^4.1.22",
     "@elastosfoundation/did-js-sdk": "^2.2.9",
     "@elastosfoundation/elastos-connectivity-sdk-js": "^1.0.23",
-    "@elastosfoundation/essentials-connector-client-browser": "^1.0.38",
+    "@elabox/essentials-connector-client-browser": "1.0.46",    
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
