@@ -1,5 +1,6 @@
-import {lazy, Suspense} from "react"
+import {lazy, Suspense, useEffect} from "react"
 import useStepsStore from "../store/steps"
+import useSetupStore from "../store/setUp"
 import WizardStyle from "../assets/css/wizard.module.css"
 import Logo from "../components/partials/Logo"
 
@@ -11,9 +12,13 @@ const SetUp = lazy(() => import('../components/SetUp'))
 const Finished = lazy(() => import('../components/Finished'))
 
 export default function Wizard(){
+    const initSetup = useSetupStore(state => state.initSetup)
     const steps = useStepsStore(state => state.steps)
     const increaseSteps = useStepsStore(state => state.increaseSteps)
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
+    useEffect(() => {
+        initSetup()
+    },[initSetup])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}

@@ -1,9 +1,15 @@
 import create from "zustand";
+import * as constant from "../utils/constants"
+import ElaboxEvent from "../utils/ElaboxEvent";
+
 const useSetupStore = create(set => ({
     isetUpCompleted:false,    
-    isExternalStorageConnected:false,
+    initSetup: () =>{
+        ElaboxEvent.subscribe(constant.PACKAGE_ID,(args)=>{
+            console.log(args)
+        })
+    },
     processSetUp: () => set(state => ({ isetUpCompleted: true })),
-    toggleExternalStorageConnected: () => set(state => ({ isExternalStorageConnected: true })),
 }))
 
 export default useSetupStore
