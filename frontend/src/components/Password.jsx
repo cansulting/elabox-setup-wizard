@@ -40,6 +40,7 @@ export default function Password({increaseSteps,decreaseSteps}){
         if (isValid){
             setPassword(pwd1)
         }
+        // eslint-disable-next-line
     },[pwd1,pwd2])        
     return <div className={PasswordStyle['app-password']}>
         <h1 className={PasswordStyle['header']}>Wallet Password</h1>
