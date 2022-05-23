@@ -30,6 +30,10 @@
 .success{
     border-color: lightgreen;
 }
+.error{
+    border-color: red;
+    color: white;
+}
 .start{
     margin-top: 2em;
 }
