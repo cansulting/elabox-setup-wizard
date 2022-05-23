@@ -2,6 +2,8 @@ package setup_keystore
 
 import (
 	"elabox-setup/backend/global"
+	"errors"
+	"io"
 	"os"
 	"os/exec"
 
@@ -11,11 +13,7 @@ import (
 
 // return true if already setup
 func Init() bool {
-	if WasSetup() {
-		return true
-	}
-
-	return false
+	return WasSetup()
 }
 
 func InitDone() {
@@ -57,9 +55,33 @@ func generateKeystore(pass string) error {
 	return err
 }
 
+func changeSystemPassword(pass string) error {
+	stdinPass := "elabox:" + pass
+	cmd := exec.Command("chpasswd")
+	stdin, err := cmd.StdinPipe()
+	if err != nil {
+		return err
+	}
+	go func() {
+		defer stdin.Close()
+		io.WriteString(stdin, stdinPass)
+	}()
+	_, err = cmd.CombinedOutput()
+	if err != nil {
+		return errors.New("failed setting up system password. " + err.Error())
+	}
+	return nil
+}
+
 func Setup(password string) error {
 	if err := checkPassErrors(password); err != nil {
 		return err
 	}
-	return generateKeystore(password)
+	if err := generateKeystore(password); err != nil {
+		return err
+	}
+	if err := changeSystemPassword(password); err != nil {
+		return err
+	}
+	return nil
 }
