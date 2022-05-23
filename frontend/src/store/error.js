@@ -16,7 +16,7 @@ const useErrorStore = create((set) => ({
             set({hasError:true,message: args.data})
         })      
     },
-    z : (message)=> set(_=> ({ hasError: true,message })),
+    toggleError : (message)=> set(_=> ({ hasError: true,message })),
 }))
 
 export default useErrorStore
