@@ -11,7 +11,7 @@ export default function Did({increaseSteps,decreaseSteps}){
     const closeSetup = useDidStore(state => state.closeSetup)
     const processDid = useDidStore (state => state.processDid)    
     const signOut = useDidStore (state => state.signOut)
-    const hasDid = did.holder?.length > 0
+    const hasDid = did.length > 0
     const handleDidClick = () => {
         if(!isProcessingDid){
             processDid()

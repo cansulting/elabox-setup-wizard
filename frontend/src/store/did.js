@@ -20,7 +20,7 @@ const useDidStore = create(set => ({
             const {DIDAuth} = await import("../utils/did")
             const DidAuth = new DIDAuth()   
             const presentation = await DidAuth.signIn()
-            const result = presentation.toJSON()
+            const result = presentation.toString()
             set(_ => ({ did: result }))            
         } catch (error) {
             set(_ => ({ did: "" }))                        

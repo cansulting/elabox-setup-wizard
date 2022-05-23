@@ -14,8 +14,7 @@ const useSetupStore = create(set => ({
         })                    
     },
     processSetUp: data => {
-        console.log(data)        
-        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",JSON.stringify(data))
+        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",data)
     },
 }))
 

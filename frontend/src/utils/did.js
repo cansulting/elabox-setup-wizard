@@ -2,7 +2,7 @@ import {
   connectivity,
   DID,
 } from '@elastosfoundation/elastos-connectivity-sdk-js'
-import { EssentialsConnector } from '@elastosfoundation/essentials-connector-client-browser'
+import { EssentialsConnector } from '@elabox/essentials-connector-client-browser'
 //import * as W from '@elastosfoundation/elastos-connectivity-sdk-js/typings/did/mpde;';
 
 // class Auth that implements the AuthService using DID.
