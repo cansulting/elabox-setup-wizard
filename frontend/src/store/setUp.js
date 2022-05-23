@@ -4,8 +4,10 @@ import ElaboxEvent from "../utils/ElaboxEvent"
 
 const useSetupStore = create(set => ({
     isetUpCompleted:false,    
+    isSubscribe:false,
     initSetup: () =>{
         ElaboxEvent.subscribe(constant.PACKAGE_ID,(args) => {
+            set(state=>({isSubscribe:true}))
         })
         ElaboxEvent.on(constant.CHECK_SETUP,(args) => {
             console.log(args)
