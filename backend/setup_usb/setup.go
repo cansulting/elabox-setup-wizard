@@ -17,13 +17,17 @@ var initialized = false
 var lastDrives []*block.Disk = nil
 
 // return true if already setup
-func Init() bool {
+func Init() (bool, []data.StorageInfo) {
 	if WasSetup() {
-		return true
+		return true, nil
 	}
 
+	storages := make([]data.StorageInfo, 0)
+	if lastDrives != nil {
+		storages = getStorageInfo(lastDrives)
+	}
 	if initialized {
-		return false
+		return false, storages
 	}
 
 	initialized = true
@@ -48,7 +52,7 @@ func Init() bool {
 			time.Sleep(time.Second)
 		}
 	}()
-	return false
+	return false, storages
 }
 
 func isArryEquals(param1 []*block.Disk, param2 []*block.Disk) bool {
