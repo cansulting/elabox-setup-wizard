@@ -78,7 +78,7 @@ func getStorageInfo(disks []*block.Disk) []data.StorageInfo {
 			storages = append(storages, data.StorageInfo{
 				Id:    disk.Name,
 				Model: disk.Model,
-				Size:  disk.PhysicalBlockSizeBytes,
+				Size:  disk.SizeBytes,
 			})
 		}
 	}
