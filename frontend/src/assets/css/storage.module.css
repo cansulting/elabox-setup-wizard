@@ -3,6 +3,11 @@
     width: 100%;
     padding:1em;
     margin-top: 5vh;
+    border-radius: 0.25rem;
+    background-color: #272a3d;
+    color:white;
+    border-color: white;
+    border-width: 2px;
 }
 .storages > button:hover{
     border-color: lightgreen ;

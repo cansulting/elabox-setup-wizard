@@ -18,9 +18,9 @@ export default function Storage({increaseSteps}){
     const hasSelectedStorage  = selectedStorage.length > 0
     const [storage, setStorage] = useState("")
     const handleStorageChange = e =>{
-        console.log(e.target.value)
         selectStorage(e.target.value)
         setStorage(e.target.value)
+    }
     const handleSkipOrNext = () =>{
         if(!hasSelectedStorage){
             setIsOpenWarningModal(true)
