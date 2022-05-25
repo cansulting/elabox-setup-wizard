@@ -10,6 +10,7 @@
     background-color: #004e98;
 }
 .group{
+    margin-top: 2em !important;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
