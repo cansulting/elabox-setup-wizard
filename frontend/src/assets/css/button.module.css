@@ -1,3 +1,9 @@
+.outline {
+    margin-top: 2em;
+    width: 6em;
+    color: #ffffff;
+    border-color: #393939;
+}
 .setup,.skip,.essentials,.prev,.start{
     margin-top: 5em;
     width: 15em;
@@ -31,9 +37,11 @@
 .success{
     border-color: lightgreen;
 }
-.error{
+.warning {
+    border-color: yellow;
+}
+.danger{
     border-color: red;
-    color: white;
 }
 .start{
     margin-top: 2em;

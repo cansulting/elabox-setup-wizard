@@ -10,6 +10,6 @@ export default function Error(){
     return <div className={ErrorStyle['app-error']}>
         <h1>Error occured.</h1>
         <p>{message}</p>
-        <button className={`btn ${ButtonStyle['error']}`} onClick={handleTryAgain}> try again </button>
+        <button className={`btn ${ButtonStyle['danger']}`} onClick={handleTryAgain}> try again </button>
     </div>
 }
