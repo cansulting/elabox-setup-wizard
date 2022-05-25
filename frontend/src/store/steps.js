@@ -14,6 +14,9 @@ const useStepsStore = create(set => ({
             decrementBy = 1
         }
         set(state => ({ steps: state.steps > 0 ? state.steps - decrementBy : state.steps  }))        
+    },
+    setStep: (step) => {
+        set( _ => ({steps: step}))
     }
 }))
 

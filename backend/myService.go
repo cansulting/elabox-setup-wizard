@@ -79,26 +79,37 @@ func (instance *MyService) initDone(client protocol.ClientInterface, action data
 // start setting up the device. accepts json data with field usb, did and password
 func (instance *MyService) setup(client protocol.ClientInterface, action data.Action) string {
 	go func() {
+		if settingUp {
+			return
+		}
 		logger.GetInstance().Info().Msg("start setting up elabox")
 		settingUp = true
+		defer func() {
+			settingUp = false
+		}()
 		datam, err := action.DataToMap()
 		if err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "error setup, "+err.Error())
+			return
 		}
 		if err := setup_usb.Setup(datam["storage_id"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "external storage setup failed, "+err.Error())
+			return
 		}
 		if err := setup_did.Setup(datam["did"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "did setup failed, "+err.Error())
+			return
 		}
 		if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
+			return
 		}
 		if err := SetupSwapping(); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
+			return
 		}
 		broadcast.PublishSetupSuccess()
-		settingUp = false
+
 	}()
 
 	return rpc.CreateSuccessResponse("success")

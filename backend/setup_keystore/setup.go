@@ -74,6 +74,10 @@ func changeSystemPassword(pass string) error {
 }
 
 func Setup(password string) error {
+	if password == "" {
+		logger.GetInstance().Debug().Msg("password setup skiped.")
+		return nil
+	}
 	if err := checkPassErrors(password); err != nil {
 		return err
 	}

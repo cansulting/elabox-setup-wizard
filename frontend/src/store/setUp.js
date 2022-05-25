@@ -5,13 +5,16 @@ import ElaboxEvent from "../utils/ElaboxEvent"
 const useSetupStore = create(set => ({
     isetUpCompleted:false,    
     isSubscribe:false,
+    setupStatus: "unknown", // can be setup, setting_up, upsetup 
     initSetup: () =>{
         ElaboxEvent.subscribe(constant.PACKAGE_ID,(args) => {
             set(state=>({isSubscribe:true}))
         })
-        ElaboxEvent.on(constant.CHECK_SETUP,(args) => {
-            console.log(args)
-        })                    
+        ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SETUP)
+            .then( res => set( _ => ({setupStatus:res.message})))    
+        ElaboxEvent.onAction(
+            constant.BROADCAST_SUCCESS, 
+            (_) => set(_ => ({setupStatus:"setup"})))                
     },
     processSetUp: data => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",data)
