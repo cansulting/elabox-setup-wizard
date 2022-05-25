@@ -1,14 +1,8 @@
 .app-strogage {}
 .storages{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 2em;
+    width: 100%;
+    padding:1em;
     margin-top: 5vh;
-}
-.storages > button {
-    width:100%;
 }
 .storages > button:hover{
     border-color: lightgreen ;

@@ -13,9 +13,13 @@ export default function Storage({increaseSteps}){
     const selectStorage = useStorageStore(state=>state.selectStorage)
     const isExternalStorageConnected = storages.length > 0
     const hasSelectedStorage  = selectedStorage.length > 0
-    
+    const handleStorageChange = e =>{
+        selectStorage(e.target.value)
+    }
     useEffect(()=>{
-        initSetup()
+        setTimeout(()=>{
+            initSetup()
+        },2000)
         return () =>{
             closeSetup()
         }
@@ -27,13 +31,12 @@ export default function Storage({increaseSteps}){
         {!isExternalStorageConnected ? <div>
             <Spinner/>
             <p>Waiting for storage to be connected</p>            
-            </div> : <div className={StorageStyle['storages']}> 
-                {storages.map(storage=><button 
-                className={`btn btn-primary  ${storage.id === selectedStorage ? ButtonStyle['success']:''}`} key={storage.id} 
-                onClick={()=>selectStorage(storage)}>
+            </div> : <select className={StorageStyle['storages']} onChange={handleStorageChange}> 
+                <option value=""/>
+                {storages.map(storage=><option key={storage.id} value={storage.id}>
                     {storage.model} ({storage.size})
-                </button>)}    
-            </div>}
+                </option>)}    
+            </select>}
         <div className={`${ButtonStyle['group-flex-end']}`}>
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 
