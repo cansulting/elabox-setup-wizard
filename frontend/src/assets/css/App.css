@@ -8,7 +8,9 @@
   justify-content: center;
 }
 .elabox-logo{
-  height: 10em;
-  width: 10em;
+  height: 20vh;
+  width: 20vh;
+  min-height: 5em;
+  min-width: 5em;
   margin: 0 auto;
 }
