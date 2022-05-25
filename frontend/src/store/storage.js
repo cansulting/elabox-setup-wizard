@@ -14,11 +14,12 @@ const useStorageStore = create(set => ({
     initDoneSetup : () => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","storage")
     },
-    closeSetup: ()=>{
+    closeSetup: () => {
+        set(_ => ({storages:[]}))
         ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
     },
     selectStorage: (storage) => {
-        set(_ => ({storage:storage.id}))
+        set(_ => ({storage:storage}))
     }
 }))
 
