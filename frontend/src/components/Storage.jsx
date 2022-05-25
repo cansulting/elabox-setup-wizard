@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import useStorageStore from "../store/storage"
 import Spinner from "./partials/Spinner"
+import { formatBytes } from "../utils/sdcard"
 import StorageStyle from "../assets/css/storage.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import WarningModal from "./partials/modal/Warning"
@@ -54,7 +55,7 @@ export default function Storage({increaseSteps}){
                 {storages.map(storage=><button 
                 className={`btn btn-primary  ${storage.id === selectedStorage ? ButtonStyle['success']:''}`} key={storage.id} 
                 onClick={()=>selectStorage(storage)}>
-                    {storage.model} ({storage.size})
+                    {storage.model} ({formatBytes(storage.size)})
                 </button>)}    
             </div>}
         <div className={`${ButtonStyle['group-flex-end']}`}>

@@ -42,7 +42,16 @@ func (instance *MyService) init(client protocol.ClientInterface, action data.Act
 	case global.PASSWORD:
 		wasSetup = setup_keystore.Init()
 	case global.STORAGE:
-		wasSetup = setup_usb.Init()
+		wasSetup, storages := setup_usb.Init()
+		storageInfo := make(map[string]interface{})
+		status := "not_setup"
+		if wasSetup {
+			status = "setup"
+		}
+		storageInfo["status"] = status
+		storageInfo["storage_list"] = storages
+		return rpc.CreateJsonResponse(rpc.SUCCESS_CODE, storageInfo)
+
 	default:
 		return rpc.CreateResponse(rpc.INVALID_CODE, "unable to init given the data "+action.DataToString())
 	}

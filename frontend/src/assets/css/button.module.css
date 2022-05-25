@@ -1,6 +1,7 @@
 .setup,.skip,.essentials,.prev,.start{
     margin-top: 5em;
     width: 15em;
+    background-color: #004e98;
 }
 .group{
     display: flex;
