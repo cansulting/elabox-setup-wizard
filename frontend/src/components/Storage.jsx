@@ -42,7 +42,7 @@ export default function Storage({increaseSteps}){
     return <div className={StorageStyle['app-storage']}>
         <WarningModal 
         isOpen={isOpenWarningModal} 
-        message={"No external storage was selected.Some of dApps will use extra space to download blockchain data."}
+        message={"No external storage was selected. Some of dApps will use extra space to download blockchain data."}
         onClose={handleOnCloseWarningModal}
         onConfirm={handleOnConfirmWarningModal}
         />

@@ -18,8 +18,8 @@ export default function Warning({
             </div>
             <p>{message}</p>
             <div className={WarningStyle['controls']}>
-                <button className={`btn ${ButtonStyle['warning']}`} onClick={onConfirm}>Ok</button>
-                <button className={`btn ${ButtonStyle['primary']}`} onClick={onClose} >Cancel</button>                
+                <button className={`btn ${ButtonStyle['outline']}`} onClick={onConfirm}>Ok</button>
+                <button className={`btn ${ButtonStyle['outline']}`} onClick={onClose} >Cancel</button>                
             </div>
           </div>
         </div>
