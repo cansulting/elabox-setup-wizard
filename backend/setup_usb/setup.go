@@ -27,6 +27,7 @@ func Init() (bool, []data.StorageInfo) {
 		storages = getStorageInfo(lastDrives)
 	}
 	if initialized {
+		broadcast.PublishStorageChanged(storages)
 		return false, storages
 	}
 
