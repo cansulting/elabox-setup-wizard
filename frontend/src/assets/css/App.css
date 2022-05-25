@@ -10,5 +10,7 @@
 .elabox-logo{
   height: 20vh;
   width: 20vh;
+  min-height: 5em;
+  min-width: 5em;
   margin: 0 auto;
 }
