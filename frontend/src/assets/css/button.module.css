@@ -30,9 +30,11 @@
 .success{
     border-color: lightgreen;
 }
-.error{
+.warning {
+    border-color: yellow;
+}
+.danger{
     border-color: red;
-    color: white;
 }
 .start{
     margin-top: 2em;
