@@ -47,6 +47,7 @@ echo "Compiling frontend..."
 cd ../frontend
 npm install
 npm run build
-mv ./build ../build/www
+rm -r ../build/www && mkdir -p ../build/www
+mv ./build/* ../build/www
 
 packager ../build/packager.json
