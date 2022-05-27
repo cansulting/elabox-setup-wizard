@@ -18,13 +18,12 @@ export default function Did({increaseSteps,decreaseSteps}){
         }
     }
     const handleNextOrSkipClick = () =>{
+        increaseSteps()
+        initDoneSetup()
         if(hasDid){
-            initDoneSetup()
-            increaseSteps(2)
             return;
         }
         signOut()
-        increaseSteps()
     }
     useEffect(() => {
         initSetup()

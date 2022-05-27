@@ -18,6 +18,8 @@ export class DIDAuth {
 
   // sign in with a DID.
   async signIn() {
+    if (this.essentialsConnector.hasWalletConnectSession())
+      await this.essentialsConnector.disconnectWalletConnect()
     const didAccess = new DID.DIDAccess()
     const presentation = await didAccess.requestCredentials({
       claims: [

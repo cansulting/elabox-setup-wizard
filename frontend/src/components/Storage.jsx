@@ -20,11 +20,11 @@ export default function Storage({increaseSteps}){
         selectStorage(e.target.value)
     }
     const handleSkipOrNext = () =>{
+        initDoneSetup()
         if(!hasSelectedStorage){
             setIsOpenWarningModal(true)
             return
         }
-        initDoneSetup()
         increaseSteps()
     }
     const handleOnCloseWarningModal = () => {
@@ -46,10 +46,10 @@ export default function Storage({increaseSteps}){
     },[])
     return <div className={StorageStyle['app-storage']}>
         <WarningModal 
-        isOpen={isOpenWarningModal} 
-        message={"No external storage was selected. Some of dApps will use extra space to download blockchain data."}
-        onClose={handleOnCloseWarningModal}
-        onConfirm={handleOnConfirmWarningModal}
+            isOpen={isOpenWarningModal} 
+            message={"No external storage was selected. Some of dApps will use extra space to download blockchain data."}
+            onClose={handleOnCloseWarningModal}
+            onConfirm={handleOnConfirmWarningModal}
         />
         <h1>Connect External Storage</h1>
         <p>Expand your storage for data demanding nodes and services.</p>
