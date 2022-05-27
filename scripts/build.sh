@@ -45,8 +45,8 @@ eval "$gobuild" -o ../build/bin/$pkid ../backend
 # build react
 echo "Compiling frontend..."
 cd ../frontend
-#npm install
-#npm run build
+npm install
+npm run build
 mv ./build ../build/www
 
 packager ../build/packager.json

@@ -32,7 +32,7 @@ func PublishStorageChanged(drives []backend_data.StorageInfo) error {
 
 func PublishSetupSuccess() error {
 	logger.GetInstance().Debug().Msg("Setup success")
-	_, err := global.Controller.RPC.CallBroadcast(data.NewActionById(global.BROADCAST_SUCCESS))
+	_, err := global.Controller.RPC.CallBroadcast(data.NewAction(global.BROADCAST_SUCCESS, global.PACKAGE_ID, nil))
 	if err != nil {
 		logger.GetInstance().Error().Err(err).Caller().Msg("setup failed")
 	}

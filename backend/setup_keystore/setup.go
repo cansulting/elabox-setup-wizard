@@ -9,6 +9,7 @@ import (
 
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 	"github.com/cansulting/elabox-system-tools/foundation/perm"
+	"github.com/cansulting/elabox-system-tools/foundation/system"
 )
 
 // return true if already setup
@@ -37,10 +38,14 @@ func checkPassErrors(pass string) error {
 
 // use to generate keystore
 func generateKeystore(pass string) error {
-	cliPath := global.CLI_DIR_PATH + "/ela-cli"
+	wd, _ := os.Getwd()
+	if system.IDE {
+		wd += "/bin"
+	}
+	cliPath := wd + "/ela-cli"
 	dataPath := global.KEYSTORE_DIR_PATH
 	if err := os.MkdirAll(dataPath, perm.PUBLIC_WRITE); err != nil {
-		return err
+		return errors.New("unable to create dir, " + err.Error())
 	}
 	// step: exec cli
 	cmd := exec.Command(cliPath,
