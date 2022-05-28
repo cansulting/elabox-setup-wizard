@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import useStorageStore from "../store/storage"
-import Spinner from "./partials/Spinner"
 import { formatBytes } from "../utils/sdcard"
+import Spinner from "./partials/Spinner"
 import StorageStyle from "../assets/css/storage.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import WarningModal from "./partials/modal/Warning"

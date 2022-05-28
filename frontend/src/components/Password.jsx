@@ -15,6 +15,7 @@ export default function Password({increaseSteps,decreaseSteps}){
     const [pwd1, setPwd1] = useState('')
     const [pwd2, setPwd2] = useState('')   
     const initSetup = usePasswordStore(state => state.initSetup)
+    const initDoneSetup = usePasswordStore(state => state.initDoneSetup)
     const closeSetup =  usePasswordStore(state => state.closeSetup)
     const setPassword = usePasswordStore(state => state.setPassword)
     const isValidPassword = atleast6Characters(pwd1) &&  doesNotContainsSpecialCharacters(pwd1) && doesNotContainsSpace(pwd1) && doesPasswordAndConfirmPasswordMatched(pwd1,pwd2)
@@ -27,6 +28,10 @@ export default function Password({increaseSteps,decreaseSteps}){
         else {
             setPwd2(value)
         }
+    }
+    const handleNextClick = () =>{
+        initDoneSetup()
+        increaseSteps()
     }
     useEffect(()=>{
         initSetup()
@@ -70,7 +75,7 @@ export default function Password({increaseSteps,decreaseSteps}){
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']} ${!isValidPassword ? ButtonStyle['disabled']:''}`} 
             disabled={!isValidPassword}
-            onClick={increaseSteps}>
+            onClick={handleNextClick}>
                 Next
             </button>            
         </div>
