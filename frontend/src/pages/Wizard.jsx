@@ -29,6 +29,7 @@ export default function Wizard(){
             setStep(5)
         else if (setupStatus === SETUP_DONE)
             setStep(6)
+        // eslint-disable-next-line 
     }, [setupStatus])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
