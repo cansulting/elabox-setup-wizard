@@ -3,7 +3,7 @@ import useStepsStore from "../store/steps"
 import useSetupStore from "../store/setUp"
 import WizardStyle from "../assets/css/wizard.module.css"
 import Logo from "../components/partials/Logo"
-
+import Timeline from "../components/partials/Timeline"
 const Welcome = lazy(() => import('../components/Welcome'))
 const Storage = lazy(() => import('../components/Storage'))
 const Did = lazy(() => import('../components/Did'))
@@ -29,10 +29,12 @@ export default function Wizard(){
             setStep(5)
         else if (setupStatus === SETUP_DONE)
             setStep(6)
+        //eslint-disable-nextline
     }, [setupStatus, setStep])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
+            {steps < 6 && <Timeline/>}
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Storage increaseSteps={increaseSteps}/>}
             {steps === 3 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}

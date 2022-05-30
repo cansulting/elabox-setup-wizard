@@ -4,14 +4,20 @@ import * as constant from "../utils/constant"
 
 const useDidStore = create(set => ({
     did: "",
+    isSetup: "",
     isProcessingDid: false,
     initSetup: () => {
-        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","did")
+        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","did").then(response => {
+            if(response.code === 200){
+                set(_ =>({isSetup:response.message === "setup"}))                
+            }
+        })
     },
     initDoneSetup: () => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","did")
     },
     closeSetup: ()=> {
+        set(_=>({isSetup:""}))
         ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
     },
     processDid: async ()=> {
