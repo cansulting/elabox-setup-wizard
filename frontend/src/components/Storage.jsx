@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import SetUpCompleted from "./partials/SetupCompleted"
 import useStorageStore from "../store/storage"
 import { formatBytes } from "../utils/sdcard"
 import Spinner from "./partials/Spinner"
@@ -11,6 +12,7 @@ export default function Storage({increaseSteps}){
     const storages = useStorageStore(state=>state.storages)
     const selectedStorage = useStorageStore(state=>state.storage)
     const initSetup = useStorageStore(state=>state.initSetup)
+    const isSetup = useStorageStore(state=>state.isSetup)
     const initDoneSetup = useStorageStore(state=>state.initDoneSetup)
     const closeSetup = useStorageStore(state=>state.closeSetup)
     const selectStorage = useStorageStore(state=>state.selectStorage)
@@ -21,7 +23,7 @@ export default function Storage({increaseSteps}){
     }
     const handleSkipOrNext = () =>{
         initDoneSetup()
-        if(!hasSelectedStorage){
+        if(!hasSelectedStorage && !isSetup){
             setIsOpenWarningModal(true)
             return
         }
@@ -36,14 +38,15 @@ export default function Storage({increaseSteps}){
         setIsOpenWarningModal(false)
     }
     useEffect(()=>{
-        setTimeout(()=>{
-            initSetup()
-        },2000)
+        initSetup()
         return () =>{
             closeSetup()
         }
         // eslint-disable-next-line
     },[])
+    if(isSetup === ""){
+        return <Spinner/>
+    }    
     return <div className={StorageStyle['app-storage']}>
         <WarningModal 
             isOpen={isOpenWarningModal} 
@@ -51,17 +54,22 @@ export default function Storage({increaseSteps}){
             onClose={handleOnCloseWarningModal}
             onConfirm={handleOnConfirmWarningModal}
         />
-        <h1>Connect External Storage</h1>
-        <p>Expand your storage for data demanding nodes and services.</p>
-        {!isExternalStorageConnected ? <div>
-            <Spinner/>
-            <p>Waiting for storage to be connected</p>            
-            </div> : <select className={StorageStyle['storages']} value={selectedStorage} onChange={handleStorageChange}> 
-                <option value={""}>Select Storage</option>
-                {storages.map(storage=><option key={storage.id} value={storage.id}>
-                    {storage.model} ({formatBytes(storage.size)})
-                </option>)}    
-            </select>}
+        {isSetup ? 
+        <>
+            <SetUpCompleted/>
+        </>:<>
+            <h1>Connect External Storage</h1>
+            <p>Expand your storage for data demanding nodes and services.</p>
+            {!isExternalStorageConnected ? <div>
+                <Spinner/>
+                <p>Waiting for storage to be connected</p>            
+                </div> : <select className={StorageStyle['storages']} value={selectedStorage} onChange={handleStorageChange}> 
+                    <option value={""}>Select Storage</option>
+                    {storages.map(storage=><option key={storage.id} value={storage.id}>
+                        {storage.model} ({formatBytes(storage.size)})
+                    </option>)}    
+                </select>}        
+        </>}
         <div className={`${ButtonStyle['group-flex-end']}`}>
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 

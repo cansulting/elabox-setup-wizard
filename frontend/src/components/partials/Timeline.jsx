@@ -1,10 +1,10 @@
 import * as Icon from "@aw-web-design/react-feather"
-import TimelineStyle from "../assets/css/timeline.module.css"
-import useDidStore from "../store/did"
-import useSetupStore from "../store/setUp"
-import useStepsStore from "../store/steps"
-import usePasswordStore from "../store/password"
-import useStorageStore from "../store/storage"
+import TimelineStyle from "../../assets/css/timeline.module.css"
+import useDidStore from "../../store/did"
+import useSetupStore from "../../store/setUp"
+import useStepsStore from "../../store/steps"
+import usePasswordStore from "../../store/password"
+import useStorageStore from "../../store/storage"
 
 const TIMELINE_ICON_SIZE = 15
 export default function Timeline(){
@@ -12,7 +12,6 @@ export default function Timeline(){
     const isStorageSetup = useStorageStore(state=>state.isSetup)
     const isDidSetup = useDidStore(state=>state.isSetup)
     const isPasswordSetup = usePasswordStore(state=>state.isSetup)
-    console.log(isPasswordSetup)
     const setupStatus = useSetupStore(state=>state.setupStatus)
     const showPasswordStatus = !isDidSetup && steps > 3
     return <div className={TimelineStyle['timeline']}>

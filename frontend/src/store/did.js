@@ -4,7 +4,7 @@ import * as constant from "../utils/constant"
 
 const useDidStore = create(set => ({
     did: "",
-    isSetup: false,
+    isSetup: "",
     isProcessingDid: false,
     initSetup: () => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","did").then(response => {
@@ -17,6 +17,7 @@ const useDidStore = create(set => ({
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","did")
     },
     closeSetup: ()=> {
+        set(_=>({isSetup:""}))
         ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
     },
     processDid: async ()=> {

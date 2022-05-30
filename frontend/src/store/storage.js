@@ -3,7 +3,7 @@ import ElaboxEvent from "../utils/ElaboxEvent"
 import * as constant from "../utils/constant"
 
 const useStorageStore = create(set => ({
-    isSetup:false,
+    isSetup:"",
     storages:[],
     storage: "",
     initSetup: () => {
@@ -21,7 +21,7 @@ const useStorageStore = create(set => ({
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","storage")
     },
     closeSetup: () => {
-        set(_ => ({storages:[]}))
+        set(_ => ({storages:[],isSetup:""}))
         ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
     },
     selectStorage: (storage) => {

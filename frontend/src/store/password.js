@@ -3,7 +3,7 @@ import ElaboxEvent from "../utils/ElaboxEvent"
 import * as constant from "../utils/constant"
 const usePasswordStore = create(set =>({
     password:"",
-    isSetup:false,
+    isSetup:"",
     initSetup: () => {
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INIT_SETUP,"","password").then(response => {
             if(response.code === 200){
@@ -15,6 +15,7 @@ const usePasswordStore = create(set =>({
         ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.INITDONE_SETUP,"","password")
     },    
     closeSetup: ()=> {
+        set(_=>({isSetup:""}))
     },   
     setPassword: password => {
         set(_=>({password}))
