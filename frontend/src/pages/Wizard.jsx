@@ -29,7 +29,7 @@ export default function Wizard(){
             setStep(5)
         else if (setupStatus === SETUP_DONE)
             setStep(6)
-    }, [setupStatus])
+    }, [setupStatus, setStep])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
