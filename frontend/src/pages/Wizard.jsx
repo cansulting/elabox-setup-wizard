@@ -24,13 +24,13 @@ export default function Wizard(){
     useEffect(() => {
         initSetup()
     },[initSetup])
-    // useEffect(() => {
-    //     console.log(setupStatus)
-    //     if (setupStatus === SETUP_INPROGRESS)
-    //         setStep(5)
-    //     else if (setupStatus === SETUP_DONE)
-    //         setStep(6)
-    // }, [setupStatus])
+    useEffect(() => {
+        console.log(setupStatus)
+        if (setupStatus === SETUP_INPROGRESS)
+            setStep(5)
+        else if (setupStatus === SETUP_DONE)
+            setStep(6)
+    }, [setupStatus])
     return <div className={WizardStyle["app-wizard"]}> 
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
