@@ -7,16 +7,19 @@ const useErrorStore = create((set) => ({
     message: "",
     initSetup: () =>{
         ElaboxEvent.on(constant.USB_LOOKUP_ERR, args =>{
-            set({hasError:true,message: args.data})
+            const {error} = JSON.parse(args.data)
+            set({hasError:true,message:error})
         })        
         ElaboxEvent.on(constant.BROADCAST_ERROR, args =>{
-            set({hasError:true,message: args.data})
+            const {error} = JSON.parse(args.data)
+            set({hasError:true,message:error})
         })              
         ElaboxEvent.on(constant.INVALID_CODE,args => {
-            set({hasError:true,message: args.data})
+            const {error} = JSON.parse(args.data)
+            set({hasError:true,message:error})
         })      
     },
-    toggleError : (message)=> set(_=> ({ hasError: true,message })),
+    toggleError : (message)=> set(_=> ({ hasError: true, message })),
 }))
 
 export default useErrorStore
