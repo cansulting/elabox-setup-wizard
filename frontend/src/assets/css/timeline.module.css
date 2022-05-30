@@ -1,7 +1,12 @@
 .timeline{
     display:flex;
     gap:3vw;
+    color: #a1a1a1
 }
 .timeline p{
     font-size: 0.8em;
+}
+
+.active {
+    color: #037a04
 }

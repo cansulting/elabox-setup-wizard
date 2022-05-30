@@ -17,30 +17,29 @@ export default function Timeline(){
     return <div className={TimelineStyle['timeline']}>
         <div>
             {steps > 1 ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }
-            <p>Welcome</p>
+            <p className={steps > 1 && TimelineStyle['active']}>Welcome</p>
         </div>
         <hr style={{borderColor: steps > 1 ? "green":"initial"}}/>        
         <div>
             {isStorageSetup ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }
-            <p>Storage</p>
-        </div>
-        {showPasswordStatus ? <>
-            <hr style={{borderColor: steps > 3 ? "green":"initial"}}/>
+            <p className={isStorageSetup && TimelineStyle['active']}>Storage</p>
+        </div>               
+
+        <hr style={{borderColor: steps > 2 ? "green":"initial"}}/>
         <div>
-            {isPasswordSetup ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/>}
-            <p>Password</p>
-        </div>                
-        </>:<>
-            <hr style={{borderColor: steps > 2 ? "green":"initial"}}/>
-            <div>
-                {isDidSetup ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }
-                <p>Did</p>
-            </div>        
-        </>}
+            {isDidSetup ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }
+            <p className={isDidSetup && TimelineStyle['active']}>Did</p>
+        </div>    
+
+        <hr style={{borderColor: steps > 3 ? "green":"initial"}}/>
+        <div>
+        {isPasswordSetup ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/>}
+        <p className={isPasswordSetup && TimelineStyle['active']}>Password</p>
+        </div>  
         <hr style={{borderColor: steps > 5 ? "green":"initial"}}/>        
         <div>
             {setupStatus === "completed" ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }
-            <p>Setup</p>
+            <p className={setupStatus === "completed" && TimelineStyle['active']}>Complete</p>
         </div>        
     </div> 
 }
