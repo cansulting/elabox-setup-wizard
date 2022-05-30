@@ -30,8 +30,8 @@ export default function Wizard(){
         else if (setupStatus === SETUP_DONE)
             setStep(6)
         //eslint-disable-nextline
-    }, [setupStatus])
-    return <div className={WizardStyle["app-wizard"]}> 
+    }, [setupStatus, setStep])
+    return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
             {steps < 6 && <Timeline/>}
