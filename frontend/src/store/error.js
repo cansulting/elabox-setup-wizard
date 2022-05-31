@@ -8,8 +8,8 @@ const useErrorStore = create((set) => ({
     message: "",
     initSetup: () =>{
         ElaboxEvent.on(constant.BROADCAST_ERROR, args =>{
-            const {error} = JSON.parse(args.data)
-            if(args.id === constant.DOWNLOAD_FILE_ERROR_CODE ){
+            const {code,error} = JSON.parse(args.data)
+            if(code === constant.DOWNLOAD_FILE_ERROR_CODE ){
                 NotificationManager.error(error)
              return   
             }            

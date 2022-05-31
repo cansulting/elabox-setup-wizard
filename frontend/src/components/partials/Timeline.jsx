@@ -13,7 +13,6 @@ export default function Timeline(){
     const isDidSetup = useDidStore(state=>state.isSetup)
     const isPasswordSetup = usePasswordStore(state=>state.isSetup)
     const setupStatus = useSetupStore(state=>state.setupStatus)
-    const showPasswordStatus = !isDidSetup && steps > 3
     return <div className={TimelineStyle['timeline']}>
         <div>
             {steps > 1 ? <Icon.CheckCircle color="green" size={TIMELINE_ICON_SIZE}/>:<Icon.Circle size={TIMELINE_ICON_SIZE}/> }

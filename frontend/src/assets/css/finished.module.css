@@ -8,4 +8,6 @@
     align-items: center;
     margin: 1vh;
     gap:2vh;
+    border: 2px dashed #004e98;
+    padding: 1em;
 }
