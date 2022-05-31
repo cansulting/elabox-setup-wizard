@@ -7,10 +7,6 @@ const useErrorStore = create((set) => ({
     hasError:false,
     message: "",
     initSetup: () =>{
-        ElaboxEvent.on(constant.USB_LOOKUP_ERR, args =>{
-            const {error} = JSON.parse(args.data)
-            set({hasError:true,message:error})
-        })        
         ElaboxEvent.on(constant.BROADCAST_ERROR, args =>{
             const {error} = JSON.parse(args.data)
             if(args.id === constant.DOWNLOAD_FILE_ERROR_CODE ){
