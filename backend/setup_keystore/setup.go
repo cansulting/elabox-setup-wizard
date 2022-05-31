@@ -34,7 +34,7 @@ func WasSetup() bool {
 	return true
 }
 
-func checkPassErrors(pass string) error {
+func CheckPassErrors(pass string) error {
 
 	if pass == "" {
 		return fmt.Errorf("Password should not be blank")
@@ -96,7 +96,7 @@ func Setup(password string) error {
 		logger.GetInstance().Debug().Msg("password setup skiped.")
 		return nil
 	}
-	if err := checkPassErrors(password); err != nil {
+	if err := CheckPassErrors(password); err != nil {
 		return err
 	}
 	if err := generateKeystore(password); err != nil {
