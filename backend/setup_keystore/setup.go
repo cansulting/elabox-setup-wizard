@@ -3,9 +3,11 @@ package setup_keystore
 import (
 	"elabox-setup/backend/global"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 	"github.com/cansulting/elabox-system-tools/foundation/perm"
@@ -33,7 +35,18 @@ func WasSetup() bool {
 }
 
 func checkPassErrors(pass string) error {
+
+	if pass == "" {
+		return fmt.Errorf("Password should not be blank")
+	} else if len(pass) <= 5 {
+		return fmt.Errorf("Password should be at least 6 characters")
+	} else if strings.ContainsAny(pass, " ") {
+		return fmt.Errorf("Password should not have space")
+	} else if strings.ContainsAny(pass, "/[]'^$&()`{};:|\\,.<>]/") {
+		return fmt.Errorf("Password should not have special characters")
+	}
 	return nil
+
 }
 
 // use to generate keystore
