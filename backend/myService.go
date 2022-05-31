@@ -6,8 +6,6 @@ import (
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
-	"encoding/base64"
-	"os"
 
 	"github.com/cansulting/elabox-system-tools/foundation/app/rpc"
 	"github.com/cansulting/elabox-system-tools/foundation/event/data"
@@ -130,13 +128,15 @@ func (instance *MyService) checkSetupStatus(client protocol.ClientInterface, act
 
 func (instance *MyService) downloadFile(client protocol.ClientInterface, action data.Action) string {
 	var text = ""
-	switch action.DataToString() {
-	case "keystore":
-		content, err := os.ReadFile(global.KEYSTORE_PATH)
-		if err != nil {
-			broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
-		}
-		text = base64.StdEncoding.EncodeToString(content)
-	}
-	return rpc.CreateSuccessResponse(text)
+	broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed")
+	// switch action.DataToString() {
+	// case "keystore":
+	// 	content, err := os.ReadFile(global.KEYSTORE_PATH)
+	// 	if err != nil {
+	// 		broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
+	// 	}
+	// 	text = base64.StdEncoding.EncodeToString(content)
+	// }
+	// return rpc.CreateSuccessResponse(text)
+	return text
 }

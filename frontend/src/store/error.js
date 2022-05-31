@@ -1,4 +1,5 @@
 import create from "zustand"
+import {NotificationManager} from 'react-notifications';
 import ElaboxEvent from "../utils/ElaboxEvent"
 import * as constant from "../utils/constant"
 
@@ -12,14 +13,10 @@ const useErrorStore = create((set) => ({
         })        
         ElaboxEvent.on(constant.BROADCAST_ERROR, args =>{
             const {error} = JSON.parse(args.data)
-            set({hasError:true,message:error})
-        })              
-        ElaboxEvent.on(constant.INVALID_CODE,args => {
-            const {error} = JSON.parse(args.data)
-            set({hasError:true,message:error})
-        })    
-        ElaboxEvent.on(constant.DOWNLOAD_FILE_ERROR_CODE,args => {
-            const {error} = JSON.parse(args.data)
+            if(args.id === constant.DOWNLOAD_FILE_ERROR_CODE ){
+                NotificationManager.error(error)
+             return   
+            }            
             set({hasError:true,message:error})
         })              
     },
