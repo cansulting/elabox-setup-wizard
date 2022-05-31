@@ -1,3 +1,11 @@
 .app-finished{
     width:100%;    
 }
+.keystore{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh;
+    gap:2vh;
+}

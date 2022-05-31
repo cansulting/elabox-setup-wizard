@@ -37,7 +37,7 @@
     cursor: default;
 }
 .success{
-    border-color: lightgreen;
+    background-color: lightgreen;
 }
 .warning {
     border-color: yellow;
