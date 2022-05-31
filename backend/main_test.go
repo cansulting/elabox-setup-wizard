@@ -48,3 +48,9 @@ func Test_DidSetup(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func Test_KeystoreDownload(t *testing.T) {
+	if _, err := setup_keystore.Download(); err != nil {
+		t.Error(err)
+	}
+}
