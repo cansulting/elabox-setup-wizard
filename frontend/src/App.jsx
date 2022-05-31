@@ -16,7 +16,6 @@ function App() {
     initErrorSetup()
     // eslint-disable-next-line
   },[])
-
   return (
     <div className="App">
       <Suspense fallback={<Spinner type="dotted"/>}>

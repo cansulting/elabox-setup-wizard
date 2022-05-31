@@ -36,6 +36,9 @@ export default function Password({increaseSteps,decreaseSteps}){
         initDoneSetup()
         increaseSteps()
     }
+    const handlePrevClick = () => {
+        decreaseSteps(2)
+    }
     useEffect(()=>{
         initSetup()
         return ()=>{
@@ -82,7 +85,7 @@ export default function Password({increaseSteps,decreaseSteps}){
         <div className={ButtonStyle['group']}>
             <button 
             className={`btn btn-primary ${ButtonStyle['prev']}`} 
-            onClick={decreaseSteps}>
+            onClick={handlePrevClick}>
                 Previous
             </button>
             <button 

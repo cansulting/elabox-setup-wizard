@@ -17,7 +17,7 @@ const useSetupStore = create(set => ({
             (_) => set(_ => ({setupStatus:"setup"})))                
     },
     processSetUp: data => {
-        ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",data)
+        return ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",data)
     },
 }))
 
