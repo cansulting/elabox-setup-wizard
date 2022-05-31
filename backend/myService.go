@@ -134,7 +134,7 @@ func (instance *MyService) downloadFile(client protocol.ClientInterface, action 
 	case "keystore":
 		content, err := os.ReadFile(global.KEYSTORE_PATH)
 		if err != nil {
-			broadcast.PublishError(rpc.DONWLOAD_FILE_ERROR, "download keystore file failed, "+err.Error())
+			broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
 		}
 		text = base64.StdEncoding.EncodeToString(content)
 	}

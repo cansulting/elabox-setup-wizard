@@ -17,7 +17,11 @@ const useErrorStore = create((set) => ({
         ElaboxEvent.on(constant.INVALID_CODE,args => {
             const {error} = JSON.parse(args.data)
             set({hasError:true,message:error})
-        })      
+        })    
+        ElaboxEvent.on(constant.DOWNLOAD_FILE_ERROR_CODE,args => {
+            const {error} = JSON.parse(args.data)
+            set({hasError:true,message:error})
+        })              
     },
     toggleError : (message)=> set(_=> ({ hasError: true, message })),
 }))
