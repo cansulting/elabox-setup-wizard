@@ -128,9 +128,14 @@ func (instance *MyService) checkSetupStatus(client protocol.ClientInterface, act
 
 func (instance *MyService) downloadFile(client protocol.ClientInterface, action data.Action) string {
 	var text = ""
+	var err error
 	switch action.DataToString() {
 	case "keystore":
-		text, _ = setup_keystore.Download()
+		text, err = setup_keystore.Download()
+		if err != nil {
+			broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
+			return ""
+		}
 	default:
 		return rpc.CreateResponse(rpc.INVALID_CODE, "unable to init given the data "+action.DataToString())
 	}
