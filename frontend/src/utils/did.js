@@ -29,7 +29,7 @@ export class DIDAuth {
     })
 
     console.log(presentation)
-    console.log(presentation.holder.toJSON())
+    //console.log(presentation.holder.toJSON())
     //const did = presentation.toJSON();
     return presentation
   }

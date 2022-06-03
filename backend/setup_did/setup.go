@@ -1,15 +1,14 @@
 package setup_did
 
 import (
-	"crypto/sha256"
 	"elabox-setup/backend/global"
 	"encoding/json"
 	"errors"
 	"os"
 
+	"github.com/cansulting/elabox-system-tools/foundation/app/rpc"
+	"github.com/cansulting/elabox-system-tools/foundation/event/data"
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
-	"github.com/cansulting/elabox-system-tools/foundation/perm"
-	"github.com/cansulting/elabox-system-tools/foundation/system"
 )
 
 // return true if already setup
@@ -42,16 +41,19 @@ func Setup(presentationStr string) error {
 	if presentationMap["holder"] == nil || presentationMap["holder"] == "" {
 		return errors.New("holder is not valid")
 	}
-	did := presentationMap["holder"].(string)
-	// step: create hash
-	serialD := system.GetDeviceInfo().Serial
-	hash := sha256.Sum256([]byte(did + serialD))
-	// step: save to file
-	if err := os.MkdirAll(global.DID_DATA_DIR, perm.PUBLIC_WRITE); err != nil {
-		return err
+
+	datadid := make(map[string]interface{})
+	datadid["presentation"] = presentationMap
+	res, err := global.Controller.RPC.CallRPC(
+		global.ACCOUNT_PACKAGE_ID,
+		data.NewAction(global.SETUP_DID, "", datadid),
+	)
+	if err != nil {
+		return errors.New("failed to request setup did, " + err.Error())
 	}
-	if err := os.WriteFile(global.DID_HASH_PATH, hash[:], perm.PUBLIC_VIEW); err != nil {
-		return err
+	resSim, err := res.ToSimpleResponse()
+	if err == nil && resSim.Code != rpc.SUCCESS_CODE {
+		return errors.New("failed to request setup did, " + resSim.Message)
 	}
 	return nil
 }
