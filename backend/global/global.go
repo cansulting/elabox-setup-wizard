@@ -37,3 +37,13 @@ const PASSWORD = "password"
 
 // ERROR
 const USB_LOOKUP_ERR = 101 // issue found while searching for usb
+
+// keystore
+const documents = "/home/elabox/documents"
+const documentsMainchain = documents + "/ela.mainchain"
+const KEYSTORE_PATH = documentsMainchain + "/keystore.dat"
+
+// download
+const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
+
+const DOWNLOAD_FILE_ERROR_CODE = 201

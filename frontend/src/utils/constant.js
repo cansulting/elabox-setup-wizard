@@ -21,3 +21,7 @@ export const SUCCESS_CODE = 200
 export const SYSTEMERR_CODE = 400 // theres something wrong with the system
 export const INVALID_CODE = 401
 export const NOT_IMPLEMENTED = 300 // code was not implemented
+export const DOWNLOAD_FILE_ERROR_CODE = 201
+
+//download
+export const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"

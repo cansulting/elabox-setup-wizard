@@ -55,6 +55,12 @@ func Test_DidSetup(t *testing.T) {
 	}
 }
 
+func Test_KeystoreDownload(t *testing.T) {
+	if _, err := setup_keystore.Download(); err != nil {
+		t.Error(err)
+	}
+}
+
 // expect a password failure
 func Test_PasswordCheck_Failed(t *testing.T) {
 	logger.Init("ela.setup.test")

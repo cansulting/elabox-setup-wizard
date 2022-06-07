@@ -36,6 +36,9 @@ export default function Password({increaseSteps,decreaseSteps}){
         initDoneSetup()
         increaseSteps()
     }
+    const handlePrevClick = () => {
+        decreaseSteps(2)
+    }
     useEffect(()=>{
         initSetup()
         return ()=>{
@@ -61,7 +64,7 @@ export default function Password({increaseSteps,decreaseSteps}){
             <>
                 <h1 className={PasswordStyle['header']}>Wallet Password</h1>
                 <p className={PasswordStyle['intro']}>
-                    Build, sign and send transactions with securty and trust.
+                    Build, sign and send transactions with security and trust.
                 </p>
                 <form>
                     <h3 className={PasswordStyle['header3']}>Setup Password</h3>            
@@ -82,7 +85,7 @@ export default function Password({increaseSteps,decreaseSteps}){
         <div className={ButtonStyle['group']}>
             <button 
             className={`btn btn-primary ${ButtonStyle['prev']}`} 
-            onClick={decreaseSteps}>
+            onClick={handlePrevClick}>
                 Previous
             </button>
             <button 

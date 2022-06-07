@@ -40,12 +40,13 @@ export default function Did({increaseSteps,decreaseSteps}){
         return <Spinner/>
     }    
     return <div className={DidStyle['app-did']}>
+        <h1>Sign-in with DID</h1>
         {isSetup ? 
         <>
             <SetUpCompleted/>
         </>:
         <>
-            <h1>Sign-in with DID</h1>
+            
             <p>
                 This allows you to connect to DID network and own your data. 
                 <br/>
@@ -69,7 +70,7 @@ export default function Did({increaseSteps,decreaseSteps}){
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 
             onClick={handleNextOrSkipClick}>
-                {hasDid ? "Next":"Skip"}
+                {hasDid || isSetup ? "Next":"Skip"}
             </button>            
         </div>
     </div>

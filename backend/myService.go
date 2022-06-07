@@ -31,6 +31,7 @@ func (instance *MyService) OnStart() error {
 	global.Controller.RPC.OnRecieved(global.INITDONE_SETUP, instance.initDone)
 	global.Controller.RPC.OnRecieved(global.START_SETUP, instance.setup)
 	global.Controller.RPC.OnRecieved(global.CHECK_SETUP, instance.checkSetupStatus)
+	global.Controller.RPC.OnRecieved(global.DOWNLOAD_KEYSTORE, instance.downloadFile)
 	return nil
 }
 
@@ -123,4 +124,20 @@ func (instance *MyService) checkSetupStatus(client protocol.ClientInterface, act
 		setup = "unsetup"
 	}
 	return rpc.CreateSuccessResponse(setup)
+}
+
+func (instance *MyService) downloadFile(client protocol.ClientInterface, action data.Action) string {
+	var text = ""
+	var err error
+	switch action.DataToString() {
+	case "keystore":
+		text, err = setup_keystore.Download()
+		if err != nil {
+			broadcast.PublishError(global.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
+			return ""
+		}
+	default:
+		return rpc.CreateResponse(rpc.INVALID_CODE, "unable to init given the data "+action.DataToString())
+	}
+	return rpc.CreateSuccessResponse(text)
 }

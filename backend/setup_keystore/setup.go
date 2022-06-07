@@ -100,10 +100,10 @@ func Setup(password string) error {
 		return err
 	}
 	if err := generateKeystore(password); err != nil {
-		return err
+		return errors.New("failed to generate keystore")
 	}
 	if err := changeSystemPassword(password); err != nil {
-		return err
+		return errors.New("failed changed system password")
 	}
 	return nil
 }
