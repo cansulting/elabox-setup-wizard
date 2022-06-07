@@ -133,7 +133,7 @@ func (instance *MyService) downloadFile(client protocol.ClientInterface, action 
 	case "keystore":
 		text, err = setup_keystore.Download()
 		if err != nil {
-			broadcast.PublishError(rpc.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
+			broadcast.PublishError(global.DOWNLOAD_FILE_ERROR_CODE, "download keystore file failed, "+err.Error())
 			return ""
 		}
 	default:

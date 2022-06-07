@@ -45,3 +45,5 @@ const KEYSTORE_PATH = documentsMainchain + "/keystore.dat"
 
 // download
 const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
+
+const DOWNLOAD_FILE_ERROR_CODE = 201
