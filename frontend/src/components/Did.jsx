@@ -69,7 +69,7 @@ export default function Did({increaseSteps,decreaseSteps}){
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 
             onClick={handleNextOrSkipClick}>
-                {hasDid ? "Next":"Skip"}
+                {hasDid || isSetup ? "Next":"Skip"}
             </button>            
         </div>
     </div>
