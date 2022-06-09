@@ -1,4 +1,4 @@
-import {lazy, Suspense, useEffect} from "react"
+import {lazy, Suspense, useEffect, useState} from "react"
 import useStepsStore from "../store/steps"
 import useSetupStore from "../store/setUp"
 import WizardStyle from "../assets/css/wizard.module.css"
@@ -17,28 +17,41 @@ const SETUP_INPROGRESS = "setting_up"
 export default function Wizard(){
     const initSetup = useSetupStore(state => state.initSetup)
     const setupStatus = useSetupStore(state => state.setupStatus)
+    const startSetup = useSetupStore(state => state.startSetup)
     const steps = useStepsStore(state => state.steps)
     const increaseSteps = useStepsStore(state => state.increaseSteps)
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
     const setStep = useStepsStore( state => state.setStep)
+    const [dlkey, setDlkey] = useState(false)
+    const onBeginSetup = () => {
+        startSetup()
+        setDlkey(true)
+        setStep(5)
+    }
+    // called after downloaded the keystore
+    const onDownloadedKey = () => {
+        setDlkey(false)
+    }
     useEffect(() => {
         initSetup()
-        if (setupStatus === SETUP_INPROGRESS)
-            setStep(5)
+        console.log(setupStatus)
+        if (setupStatus === SETUP_INPROGRESS) 
+            onBeginSetup()
         else if (setupStatus === SETUP_DONE)
-            setStep(7)
+            setStep(6)
     //eslint-disable-next-line
-    },[])
+    },[setupStatus, setStep])
+    
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Storage increaseSteps={increaseSteps}/>}
             {steps === 3 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
-            {steps === 4 && <Password decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}        
-            {steps === 5 && <SetUp increaseSteps={increaseSteps}/>}             
-            {steps === 6 && <KeyStore increaseSteps={increaseSteps}/>}   
-            {steps === 7 && <Finished/>}                      
+            {steps === 4 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
+            {steps === 5 && <SetUp/>}             
+            {steps === 6 && dlkey && <KeyStore increaseSteps={onDownloadedKey}/>}   
+            {steps === 6 && !dlkey && <Finished/>}                      
         </Suspense>
     </div>
 }
