@@ -6,7 +6,7 @@ export default function Finished(){
         window.location.href = window.location.origin
     }
     return <div className={FinishedStyle['app-finished']}>
-        <h1>Congratulations, you're all setup!</h1>
+        <h1>Congratulations, setup complete!</h1>
         <button 
             className={`btn btn-primary ${ButtonStyle['start']}`} 
             onClick={() => redirect()}>

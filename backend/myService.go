@@ -6,6 +6,7 @@ import (
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
+	"time"
 
 	"github.com/cansulting/elabox-system-tools/foundation/app/rpc"
 	"github.com/cansulting/elabox-system-tools/foundation/event/data"
@@ -79,12 +80,12 @@ func (instance *MyService) initDone(client protocol.ClientInterface, action data
 
 // start setting up the device. accepts json data with field usb, did and password
 func (instance *MyService) setup(client protocol.ClientInterface, action data.Action) string {
+	if settingUp {
+		return rpc.CreateSuccessResponse("success")
+	}
+	logger.GetInstance().Info().Msg("start setting up elabox")
+	settingUp = true
 	go func() {
-		if settingUp {
-			return
-		}
-		logger.GetInstance().Info().Msg("start setting up elabox")
-		settingUp = true
 		defer func() {
 			settingUp = false
 		}()
@@ -109,8 +110,8 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
 			return
 		}
+		time.Sleep(time.Second * 1)
 		broadcast.PublishSetupSuccess()
-
 	}()
 
 	return rpc.CreateSuccessResponse("success")
