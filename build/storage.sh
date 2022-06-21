@@ -1,14 +1,14 @@
 #!/bin/bash
 # script for setting up external storage
 
-homedir=${2:-/home/elabox}
+homedir=/home/elabox
 storage=${1}
 hometmp=/home/tmp
 
 # move the old home to temp dir so it can be move to the new home
 mkdir $hometmp
-mv $homedir/* $hometmp
-
+cp -af $homedir/* $hometmp
+rm -rf $homedir
 echo 'y' |  mkfs.ext4 /dev/$storage
 sudo mount /dev/$storage $homedir
 # check the unique identifier of /dev/sda
@@ -19,4 +19,4 @@ chown -R elabox:elabox $homedir
 
 # move the tmp files to the new home
 mv $hometmp/* $homedir
-rm -d $hometmp
+rm -rf $hometmp 
