@@ -1,0 +1,8 @@
+.app-installer-details {
+    position: absolute;
+    display: flex;
+    gap: 0.5em;
+    bottom: 1em;
+    right: 1em;
+    color: white;
+}

@@ -3,6 +3,7 @@ import Spinner from './components/partials/Spinner'
 import useErrorStore from './store/error'
 import './assets/css/App.css'
 import useSetupStore from './store/setUp'
+import InstallerDetails from './components/partials/InstallerDetails'
 
 const Error = lazy(() => import('./pages/Error'))
 const Wizard = lazy(() => import('./pages/Wizard'))
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <Suspense fallback={<Spinner type="dotted"/>}>
         {hasError ? <Error/> : <Wizard/>}
+        <InstallerDetails/>
       </Suspense>
     </div>
   )
