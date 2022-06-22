@@ -10,6 +10,7 @@ const Password = lazy(() => import('../components/Password'))
 const SetUp = lazy(() => import('../components/SetUp'))
 const Finished = lazy(() => import('../components/Finished'))
 const KeyStore = lazy(() => import("../components/Keystore"))
+const Activation  = lazy(() => import("../components/Activation"))
 
 const SETUP_DONE = 'setup'
 const SETUP_INPROGRESS = "setting_up"
@@ -30,7 +31,7 @@ export default function Wizard(){
     }
     // called after downloaded the keystore
     const onDownloadedKey = () => {
-        setDlkey(false)
+        setDlkey(false)        
     }
     useEffect(() => {
         initSetup()
@@ -38,10 +39,9 @@ export default function Wizard(){
         if (setupStatus === SETUP_INPROGRESS) 
             onBeginSetup()
         else if (setupStatus === SETUP_DONE)
-            setStep(6)
+            setStep(7)
     //eslint-disable-next-line
     },[setupStatus, setStep])
-    
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
@@ -51,7 +51,8 @@ export default function Wizard(){
             {steps === 4 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
             {steps === 5 && <SetUp/>}             
             {steps === 6 && dlkey && <KeyStore increaseSteps={onDownloadedKey}/>}   
-            {steps === 6 && !dlkey && <Finished/>}                      
+            {steps === 6 && !dlkey && <Activation increaseSteps={increaseSteps}/>}                      
+            {steps === 7 && <Finished />}                                  
         </Suspense>
     </div>
 }

@@ -6,7 +6,7 @@ const useStepsStore = create(set => ({
         if(typeof incrementBy !== 'number'){
             incrementBy = 1
         }
-        set(state => ({ steps: state.steps < 7 ? state.steps + incrementBy : state.steps }))
+        set(state => ({ steps: state.steps < 8 ? state.steps + incrementBy : state.steps }))
     }
     ,
     decreaseSteps: (decrementBy = 1) => {
