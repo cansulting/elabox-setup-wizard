@@ -6,3 +6,6 @@
     right: 1em;
     color: white;
 }
+.app-installer-details p{
+    opacity:0.3;
+}
