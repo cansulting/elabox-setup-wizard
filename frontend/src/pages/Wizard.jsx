@@ -27,7 +27,7 @@ export default function Wizard(){
     const onBeginSetup = () => {
         startSetup()
         setDlkey(true)
-        setStep(5)
+        setStep(6)
     }
     // called after downloaded the keystore
     const onDownloadedKey = () => {
@@ -36,23 +36,23 @@ export default function Wizard(){
     useEffect(() => {
         initSetup()
         console.log(setupStatus)
-        if (setupStatus === SETUP_INPROGRESS) 
-            onBeginSetup()
-        else if (setupStatus === SETUP_DONE)
-            setStep(7)
+        // if (setupStatus === SETUP_INPROGRESS) 
+        //     onBeginSetup()
+        // else if (setupStatus === SETUP_DONE)
+        //     setStep(7)
     //eslint-disable-next-line
     },[setupStatus, setStep])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
-            {steps === 2 && <Storage increaseSteps={increaseSteps}/>}
-            {steps === 3 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
-            {steps === 4 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
-            {steps === 5 && <SetUp/>}             
-            {steps === 6 && dlkey && <KeyStore increaseSteps={onDownloadedKey}/>}   
-            {steps === 6 && !dlkey && <Activation increaseSteps={increaseSteps}/>}                      
-            {steps === 7 && <Finished />}                                  
+            {steps == 2 && <Activation increaseSteps={increaseSteps}/>}
+            {steps === 3 && <Storage increaseSteps={increaseSteps}/>}
+            {steps === 4 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
+            {steps === 5 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
+            {steps === 6 && <SetUp/>}             
+            {steps === 7 && dlkey && <KeyStore increaseSteps={onDownloadedKey}/>}   
+            {steps === 7 && !dlkey && <Finished />}                                  
         </Suspense>
     </div>
 }
