@@ -1,71 +1,35 @@
-
-// this displays the license activation page
-
-import React from 'react'
-import * as Icon from "react-feather"
+import React,{useState} from 'react'
 import ActivationStyle from "../assets/css/activation.module.css"
-import ButtonStyle from "../assets/css/button.module.css"
 import { activateLicense } from '../utils/license'
+import ActivationPage from "./partials/activation/Activate"
+import PurchasePage from './partials/activation/Purchase'
 
 export default function Activation({increaseSteps}) {
-    const handlePurchaseClick = async ()=>{
+    const [currentActivationPage,setCurrentActivationPage] = useState(0)
+    const handlePageChange = page =>{
+        setCurrentActivationPage(page)
+    }
+    const handleActivation = async () =>{
         let res = await activateLicense()
         if(res){
             increaseSteps()
         }        
     }
+    const handlePurchase = ()=>{
+        window.open('https://store.elabox.com/', '_blank')
+    }
     return ( 
         <div className={ActivationStyle['app-activation']}>
             <h1>Activate Elabox</h1>
             <p>Unlock rewards and premium support</p>            
-            <table className={ActivationStyle['table']}>
-                <thead>
-                    <tr>
-                        <th> </th>
-                        <th>Free</th>
-                        <th>Premium</th>                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style={{ paddingRight: 30 }}>Nodes(Mainchain,ESC,DID)</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                    </tr>
-                    <tr>
-                        <td>dApps</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                    </tr>
-                    <tr>
-                        <td>dApps services</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                    </tr>
-                    <tr>
-                        <td>Premium Support</td>
-                        <td>{<Icon.XCircle height={20} width={20} color="red" />}</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                    </tr>
-                    <tr>
-                        <td>Rewards</td>
-                        <td>{<Icon.XCircle height={20} width={20} color="red" />}</td>
-                        <td>{<Icon.CheckCircle height={20} width={20} color="green" />}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className={ButtonStyle['group']}>
-                <button 
-                className={`btn btn-primary ${ButtonStyle['prev']}`} 
-                onClick={increaseSteps}>
-                    Skip
-                </button>
-                <button 
-                className={`btn btn-primary ${ButtonStyle['skip']}`} 
-                onClick={handlePurchaseClick}>
-                    Purchase
-                </button>            
-            </div>   
+            {currentActivationPage === 0 ? 
+            <ActivationPage 
+            handlePageChange={handlePageChange} 
+            handleActivation={handleActivation}/> : 
+            <PurchasePage 
+            increaseSteps={increaseSteps} 
+            handlePurchase={handlePurchase}/>            
+            }
         </div>   
     )
 }
