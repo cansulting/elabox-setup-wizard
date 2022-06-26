@@ -1,6 +1,7 @@
 package main
 
 import (
+	"elabox-setup/backend/info"
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
@@ -57,6 +58,13 @@ func Test_DidSetup(t *testing.T) {
 
 func Test_KeystoreDownload(t *testing.T) {
 	if _, err := setup_keystore.Download(); err != nil {
+		t.Error(err)
+	}
+}
+
+func Test_InfoDownload(t *testing.T) {
+	os.Chdir("../build")
+	if _, err := info.Download(); err != nil {
 		t.Error(err)
 	}
 }

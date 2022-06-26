@@ -3,6 +3,7 @@ package main
 import (
 	"elabox-setup/backend/broadcast"
 	"elabox-setup/backend/global"
+	"elabox-setup/backend/info"
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
@@ -33,6 +34,7 @@ func (instance *MyService) OnStart() error {
 	global.Controller.RPC.OnRecieved(global.START_SETUP, instance.setup)
 	global.Controller.RPC.OnRecieved(global.CHECK_SETUP, instance.checkSetupStatus)
 	global.Controller.RPC.OnRecieved(global.DOWNLOAD_KEYSTORE, instance.downloadFile)
+	global.Controller.RPC.OnRecieved(global.GET_INFO, instance.getInfo)
 	return nil
 }
 
@@ -139,6 +141,19 @@ func (instance *MyService) downloadFile(client protocol.ClientInterface, action 
 		}
 	default:
 		return rpc.CreateResponse(rpc.INVALID_CODE, "unable to init given the data "+action.DataToString())
+	}
+	return rpc.CreateSuccessResponse(text)
+}
+func (instance *MyService) getInfo(client protocol.ClientInterface, action data.Action) string {
+	var text = ""
+	var err error
+	switch action.DataToString() {
+	case "info":
+		text, err = info.Download()
+		if err != nil {
+			broadcast.PublishError(global.READING_INFO_FILE_ERROR_CODE, "cant read info.json, "+err.Error())
+			return ""
+		}
 	}
 	return rpc.CreateSuccessResponse(text)
 }

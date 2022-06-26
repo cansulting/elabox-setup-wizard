@@ -25,3 +25,6 @@ export const DOWNLOAD_FILE_ERROR_CODE = 201
 
 //download
 export const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
+
+//info
+export const GET_INFO = "GET_INFO"
