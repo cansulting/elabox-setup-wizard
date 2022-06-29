@@ -47,7 +47,7 @@ export default function Wizard(){
             {steps !== 5 && <Logo/>}
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Activation increaseSteps={increaseSteps}/>}
-            {steps === 3 && <Storage increaseSteps={increaseSteps}/>}
+            {steps === 3 && <Storage decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
             {steps === 4 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
             {steps === 5 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
             {steps === 6 && <SetUp/>}             

@@ -7,7 +7,7 @@ import StorageStyle from "../assets/css/storage.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import WarningModal from "./partials/modal/Warning"
 
-export default function Storage({increaseSteps}){
+export default function Storage({decreaseSteps,increaseSteps}){
     const [isOpenWarningModal,setIsOpenWarningModal] = useState(false)
     const storages = useStorageStore(state=>state.storages)
     const selectedStorage = useStorageStore(state=>state.storage)
@@ -21,6 +21,9 @@ export default function Storage({increaseSteps}){
     const handleStorageChange = e =>{
         selectStorage(e.target.value)
     }
+    const handlePrevClick = () => {
+        decreaseSteps(2)
+    }    
     const handleSkipOrNext = () =>{
         initDoneSetup()
         if(!hasSelectedStorage && !isSetup){
@@ -71,6 +74,11 @@ export default function Storage({increaseSteps}){
                 </select>}        
         </>}
         <div className={`${ButtonStyle['group-flex-end']}`}>
+            <button 
+            className={`btn btn-primary ${ButtonStyle['prev']}`} 
+            onClick={handlePrevClick}>
+                Previous
+            </button>            
             <button 
             className={`btn btn-primary ${ButtonStyle['skip']}`} 
             onClick={handleSkipOrNext}>
