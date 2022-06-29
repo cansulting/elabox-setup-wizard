@@ -22,7 +22,7 @@ export default function Storage({decreaseSteps,increaseSteps}){
         selectStorage(e.target.value)
     }
     const handlePrevClick = () => {
-        decreaseSteps(2)
+        decreaseSteps()
     }    
     const handleSkipOrNext = () =>{
         initDoneSetup()
@@ -73,7 +73,7 @@ export default function Storage({decreaseSteps,increaseSteps}){
                     </option>)}    
                 </select>}        
         </>}
-        <div className={`${ButtonStyle['group-flex-end']}`}>
+        <div className={`${ButtonStyle['group']}`}>
             <button 
             className={`btn btn-primary ${ButtonStyle['prev']}`} 
             onClick={handlePrevClick}>
