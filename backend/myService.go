@@ -111,7 +111,9 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 			return
 		}
 		time.Sleep(time.Second * 1)
-		broadcast.PublishSetupSuccess()
+		if err := MarkAsSuccess(); err != nil {
+			logger.GetInstance().Error().Err(err).Msg("failed to mark as success")
+		}
 	}()
 
 	return rpc.CreateSuccessResponse("success")

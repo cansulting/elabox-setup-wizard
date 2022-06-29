@@ -29,6 +29,7 @@ const SETUP_DID = "account.actions.DID_SETUP"
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed
 const BROADCAST_ERROR = "setup.broadcast.SETUP_ERROR"               // broadcast when recieved an error
 const BROADCAST_SUCCESS = "setup.broadcast.SETUP_SUCCESS"
+const SYSTEM_CONFIGURED = "ela.system.CONFIGURED" // mark the system as configured
 
 // setup id
 const DID = "did"
