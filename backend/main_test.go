@@ -63,7 +63,6 @@ func Test_KeystoreDownload(t *testing.T) {
 }
 
 func Test_InfoDownload(t *testing.T) {
-	os.Chdir("../build")
 	if _, err := info.Download(); err != nil {
 		t.Error(err)
 	}
