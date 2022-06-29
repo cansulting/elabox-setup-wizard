@@ -7,7 +7,7 @@ hometmp=/home/tmp
 
 # move the old home to temp dir so it can be move to the new home
 mkdir $hometmp
-cp -af $homedir/* $hometmp
+rsync -a $homedir/* $hometmp
 rm -rf $homedir
 echo 'y' |  mkfs.ext4 /dev/$storage
 sudo mount /dev/$storage $homedir
@@ -18,5 +18,5 @@ echo "UUID=${USD_UUID} $homedir ext4 defaults 0 0" | tee -a /etc/fstab > /dev/nu
 chown -R elabox:elabox $homedir
 
 # move the tmp files to the new home
-mv $hometmp/* $homedir
+rsync -a $hometmp/* $homedir
 rm -rf $hometmp 
