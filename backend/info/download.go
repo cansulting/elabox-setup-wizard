@@ -4,11 +4,13 @@ import (
 	"elabox-setup/backend/global"
 	"encoding/base64"
 	"os"
+
+	"github.com/cansulting/elabox-system-tools/foundation/path"
 )
 
 func Download() (string, error) {
-	currentWorkingDirectory, _ := os.Getwd()
-	content, err := os.ReadFile(currentWorkingDirectory + global.INFO_PATH)
+	systemPath := path.GetAppInstallLocation("ela.system", false)
+	content, err := os.ReadFile(systemPath + global.INFO_PATH)
 	if err != nil {
 		return "", err
 	}
