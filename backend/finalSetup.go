@@ -12,7 +12,7 @@ import (
 func SetupSwapping() error {
 	// memory swapping
 	logger.GetInstance().Debug().Msg("init swapping...")
-	return utils.RunBash("/bin/bash swapping.sh", "")
+	return utils.RunBashFile("swapping.sh", "")
 }
 
 func MarkAsSuccess() error {

@@ -74,3 +74,10 @@ func Test_PasswordCheck_Failed(t *testing.T) {
 		t.Error("expected error because of space")
 	}
 }
+
+// func TestUpdateStab(t *testing.T) {
+// 	logger.Init("ela.setup.test")
+// 	if err := setup_usb.UpdateFstab("sdb", "", "/home/elabox"); err != nil {
+// 		t.Error(err)
+// 	}
+// }

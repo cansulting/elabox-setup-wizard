@@ -8,14 +8,10 @@ import (
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 )
 
-func RunBash(bash string, dir string) error {
+func RunBashFile(bash string, dir string) error {
 	sep := strings.Split(bash, " ")
 	var cmd *exec.Cmd
-	if len(sep) > 1 {
-		cmd = exec.Command(sep[0], sep[1:]...)
-	} else {
-		cmd = exec.Command(sep[0])
-	}
+	cmd = exec.Command("/bin/bash", sep[:]...)
 	cmd.Dir = dir
 	contents, err := cmd.CombinedOutput()
 	logger.GetInstance().Debug().Msg(string(contents))
@@ -23,4 +19,15 @@ func RunBash(bash string, dir string) error {
 		return errors.SystemNew("failed to run command "+bash, err)
 	}
 	return nil
+}
+
+func RunBashStmt(statement string, dir string) (string, error) {
+	cmd := exec.Command("bash", "-c", statement)
+	cmd.Dir = dir
+	contents, err := cmd.CombinedOutput()
+	logger.GetInstance().Debug().Msg(string(contents))
+	if err != nil {
+		return string(contents), errors.SystemNew("failed to run command "+statement, err)
+	}
+	return string(contents), nil
 }
