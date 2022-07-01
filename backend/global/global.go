@@ -44,6 +44,11 @@ const documents = "/home/elabox/documents"
 const documentsMainchain = documents + "/ela.mainchain"
 const KEYSTORE_PATH = documentsMainchain + "/keystore.dat"
 
+//info
+const INFO_PATH = "/info.json"
+const GET_INFO = "GET_INFO"
+const READING_INFO_FILE_ERROR_CODE = 202
+
 // download
 const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
 

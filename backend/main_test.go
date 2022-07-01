@@ -4,6 +4,7 @@ import (
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
+	"elabox-setup/backend/utils"
 	"os"
 	"testing"
 	"time"
@@ -57,6 +58,12 @@ func Test_DidSetup(t *testing.T) {
 
 func Test_KeystoreDownload(t *testing.T) {
 	if _, err := setup_keystore.Download(); err != nil {
+		t.Error(err)
+	}
+}
+
+func Test_InfoDownload(t *testing.T) {
+	if _, err := utils.GetSystemInfo(); err != nil {
 		t.Error(err)
 	}
 }
