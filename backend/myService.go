@@ -3,10 +3,10 @@ package main
 import (
 	"elabox-setup/backend/broadcast"
 	"elabox-setup/backend/global"
-	"elabox-setup/backend/info"
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
+	"elabox-setup/backend/utils"
 	"time"
 
 	"github.com/cansulting/elabox-system-tools/foundation/app/rpc"
@@ -149,7 +149,7 @@ func (instance *MyService) getInfo(client protocol.ClientInterface, action data.
 	var err error
 	switch action.DataToString() {
 	case "info":
-		text, err = info.Download()
+		text, err = utils.GetSystemInfo()
 		if err != nil {
 			broadcast.PublishError(global.READING_INFO_FILE_ERROR_CODE, "cant read info.json, "+err.Error())
 			return ""

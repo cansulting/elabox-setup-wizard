@@ -1,4 +1,4 @@
-package info
+package utils
 
 import (
 	"elabox-setup/backend/global"
@@ -8,7 +8,7 @@ import (
 	"github.com/cansulting/elabox-system-tools/foundation/path"
 )
 
-func Download() (string, error) {
+func GetSystemInfo() (string, error) {
 	systemPath := path.GetAppInstallLocation("ela.system", false)
 	content, err := os.ReadFile(systemPath + global.INFO_PATH)
 	if err != nil {
