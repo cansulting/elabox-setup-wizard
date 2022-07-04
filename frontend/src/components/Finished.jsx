@@ -1,10 +1,9 @@
-import { emptyCacheWithRedirect } from "../utils/cache"
 import FinishedStyle from "../assets/css/finished.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 
 export default function Finished(){
     const redirect = () => {
-        emptyCacheWithRedirect()
+        window.location.href = `${window.location.origin}?${new Date().getTime()}`            
     }
     return <div className={FinishedStyle['app-finished']}>
         <h1>Congratulations, setup complete!</h1>
