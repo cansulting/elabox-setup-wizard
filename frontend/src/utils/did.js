@@ -1,58 +1,81 @@
-import {
-  connectivity,
-  DID,
-} from '@elastosfoundation/elastos-connectivity-sdk-js'
-import { EssentialsConnector } from '@elabox/essentials-connector-client-browser'
-//import * as W from '@elastosfoundation/elastos-connectivity-sdk-js/typings/did/mpde;';
+import { connectivity, DID } from '@elastosfoundation/elastos-connectivity-sdk-js';
+import { EssentialsConnector } from '@elabox/essentials-connector-client-browser';
+import ElaboxEvent from "../utils/ElaboxEvent"
+import * as constant from "../utils/constant"
+// import { ACCOUNT_PKID, AC_AUTHENTICATE_DID, AC_DID_SETUP_CHECK } from "../utils/constant";
 
-// class Auth that implements the AuthService using DID.
-export class DIDAuth {
-  constructor() {
-    this._initConnector()
-  }
+let instance = null;
+export default class Did {
 
-  _initConnector() {
-    this.essentialsConnector = new EssentialsConnector()
-    connectivity.registerConnector(this.essentialsConnector)
-  }
-
-  // sign in with a DID.
-  async signIn() {
-    if (this.essentialsConnector.hasWalletConnectSession())
-      await this.essentialsConnector.disconnectWalletConnect()
-    const didAccess = new DID.DIDAccess()
-    const presentation = await didAccess.requestCredentials({
-      claims: [
-        DID.standardNameClaim('Your name', false),
-        DID.standardEmailClaim('Your email address', false),
-      ],
-    })
-
-    console.log(presentation)
-    //console.log(presentation.holder.toJSON())
-    //const did = presentation.toJSON();
-    return presentation
-  }
-
-  async signout() {
-    if (this.essentialsConnector) {
-      this.essentialsConnector.disconnectWalletConnect()
+    _initConnector() {
+        console.log("initConnector")
+        const connector = new EssentialsConnector()
+        connectivity.registerConnector(connector)
+        this.connector = connector
     }
-  }
-  async isConnected(){
-    if(this.essentialsConnector){
-      return true;
-    }
-    return false;
-  }
-  async importCredential(credential) {
-    let didAccess = new DID.DIDAccess()
-    let importedCredentials = await didAccess.importCredentials([credential])
 
-    if (importedCredentials.length === 1) {
-      //   this._snackBar.open("Credential successfully imported to your wallet!", "Cool", {
-      //     duration: 3000
-      //   });
+    static getInstance() {
+        if (!instance) {
+            instance = new Did()
+            instance._initConnector()
+        }
+        return instance 
     }
-  }
+    // use to check if able to signin using DID? return true or false
+    async isDidAvailable() {
+        const res = await ElaboxEvent.sendRPC(constant.ACCOUNT_PKID, constant.AC_DID_SETUP_CHECK)
+        if (res.code === 200) {
+            if (res.message === "setup")
+                return true
+        }
+        console.log(res)
+        return false
+    }
+
+    async request() {
+        if (this.connector.hasWalletConnectSession())
+            await this.connector.disconnectWalletConnect()
+        const didAccess = new DID.DIDAccess()
+        
+        try {
+            const presentation = await didAccess.requestCredentials(
+                {claims: [DID.standardNameClaim("Activate elabox", false)]}
+            );
+            return presentation
+        } catch (error) {
+            console.log(error);
+            return null
+        }
+    }
+
+    async signin() {
+        try {
+            const presentation = await this.request()
+            const res = await this._authenticate(presentation)
+            if (res.code === 200) {
+                // console.log("signin error", res)
+                // throw res
+                res.message = JSON.parse(res.message)
+            }
+            return res
+        } catch (error) {
+            console.log(error);
+            return error
+        }
+        
+    }
+
+    async _authenticate(presentation) {
+        const res = await ElaboxEvent.sendRPC(constant.ACCOUNT_PKID, constant.AC_AUTHENTICATE_DID, "", presentation)
+        console.log(res)
+        return res
+    }
+
+    disconnectConnector() {
+        if (this.connector) {
+            
+            this.connector.disconnect()
+            this.connector = null
+        }
+    }
 }

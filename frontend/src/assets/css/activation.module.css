@@ -1,0 +1,15 @@
+.app-activation{
+    width:40vw;
+}
+.table-container{
+    overflow:auto;
+    border: 0.05em solid rgba(255, 255, 255, 0.175);
+    padding:0.5em;
+    margin-top: 1em;
+}
+.table{
+    color:white;
+    width:100%;
+    margin-top: 1em;
+    border-collapse: collapse;   
+}

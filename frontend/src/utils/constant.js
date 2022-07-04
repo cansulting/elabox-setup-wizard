@@ -26,5 +26,18 @@ export const DOWNLOAD_FILE_ERROR_CODE = 201
 //download
 export const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
 
+//license
+
+export const rewards = "ela.rewards"
+export const REGISTERDEVICE_ACTION = "ela.reward.actions.REGISTER_DEVICE"
+export const CHECK_DEVICE_ACTION = "ela.reward.actions.CHECK_DEVICE"
+
+export const INSTALLER_PKID = "ela.installer"
+export const SERVICE_ID = "ela.system"
+export const ACCOUNT_PKID = "ela.account"
+
+// action ids
+export const AC_AUTHENTICATE_DID = "account.actions.AUTH_DID"
+export const AC_DID_SETUP_CHECK = "account.actions.DID_SETUP_CHECK" // use to check if did was setup to the device
 //info
 export const GET_INFO = "GET_INFO"
