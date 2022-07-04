@@ -29,6 +29,7 @@ const SETUP_DID = "account.actions.DID_SETUP"
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed
 const BROADCAST_ERROR = "setup.broadcast.SETUP_ERROR"               // broadcast when recieved an error
 const BROADCAST_SUCCESS = "setup.broadcast.SETUP_SUCCESS"
+const SYSTEM_CONFIGURED = "ela.system.CONFIGURED" // mark the system as configured
 
 // setup id
 const DID = "did"
@@ -42,6 +43,11 @@ const USB_LOOKUP_ERR = 101 // issue found while searching for usb
 const documents = "/home/elabox/documents"
 const documentsMainchain = documents + "/ela.mainchain"
 const KEYSTORE_PATH = documentsMainchain + "/keystore.dat"
+
+//info
+const INFO_PATH = "/info.json"
+const GET_INFO = "GET_INFO"
+const READING_INFO_FILE_ERROR_CODE = 202
 
 // download
 const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"

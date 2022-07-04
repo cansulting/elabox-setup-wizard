@@ -39,3 +39,5 @@ export const ACCOUNT_PKID = "ela.account"
 // action ids
 export const AC_AUTHENTICATE_DID = "account.actions.AUTH_DID"
 export const AC_DID_SETUP_CHECK = "account.actions.DID_SETUP_CHECK" // use to check if did was setup to the device
+//info
+export const GET_INFO = "GET_INFO"

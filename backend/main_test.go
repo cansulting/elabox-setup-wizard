@@ -4,6 +4,7 @@ import (
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
+	"elabox-setup/backend/utils"
 	"os"
 	"testing"
 	"time"
@@ -61,6 +62,12 @@ func Test_KeystoreDownload(t *testing.T) {
 	}
 }
 
+func Test_InfoDownload(t *testing.T) {
+	if _, err := utils.GetSystemInfo(); err != nil {
+		t.Error(err)
+	}
+}
+
 // expect a password failure
 func Test_PasswordCheck_Failed(t *testing.T) {
 	logger.Init("ela.setup.test")
@@ -74,3 +81,10 @@ func Test_PasswordCheck_Failed(t *testing.T) {
 		t.Error("expected error because of space")
 	}
 }
+
+// func TestUpdateStab(t *testing.T) {
+// 	logger.Init("ela.setup.test")
+// 	if err := setup_usb.UpdateFstab("sdb", "", "/home/elabox"); err != nil {
+// 		t.Error(err)
+// 	}
+// }
