@@ -3,7 +3,7 @@ import ButtonStyle from "../assets/css/button.module.css"
 
 export default function Finished(){
     const redirect = () => {
-        window.location.href = window.location.origin
+        window.location.reload(true)
     }
     return <div className={FinishedStyle['app-finished']}>
         <h1>Congratulations, setup complete!</h1>
