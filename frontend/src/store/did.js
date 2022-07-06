@@ -1,6 +1,7 @@
 import create from "zustand"
 import ElaboxEvent from "../utils/ElaboxEvent"
 import * as constant from "../utils/constant"
+import Did  from "../utils/did"
 
 const useDidStore = create(set => ({
     did: "",
@@ -23,12 +24,11 @@ const useDidStore = create(set => ({
     processDid: async ()=> {
         try {
             set(_ => ({ isProcessingDid: true }));            
-            const {DIDAuth} = await import("../utils/did")
-            const DidAuth = new DIDAuth()   
-            const presentation = await DidAuth.signIn()
+            const presentation = await Did.getInstance().signin()
             const result = presentation.toString()
             set(_ => ({ did: result }))            
-        } catch (error) {
+        } catch (err) {
+            console.log("Error did", err)
             set(_ => ({ did: "" }))                        
         } finally{
             set(_ => ({ isProcessingDid: false }))
