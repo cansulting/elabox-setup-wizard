@@ -22,17 +22,17 @@ const useDidStore = create(set => ({
         ElaboxEvent.off(constant.BROADCAST_STORAGE_CHANGED)
     },
     processDid: async ()=> {
+        set(_ => ({ isProcessingDid: true, did: "" }));  
         try {
-            set(_ => ({ isProcessingDid: true }));            
-            const presentation = await Did.getInstance().signin()
-            const result = presentation.toString()
-            set(_ => ({ did: result }))            
+            const presentation = await Did.getInstance().request()
+            if (presentation ) {
+                const result = presentation.toString()
+                set(_ => ({ did: result }))
+            }            
         } catch (err) {
-            console.log("Error did", err)
-            set(_ => ({ did: "" }))                        
-        } finally{
-            set(_ => ({ isProcessingDid: false }))
-        }
+            console.log("Error did", err)               
+        } 
+        set(_ => ({ isProcessingDid: false }))
     },
     signOut: async () =>{
         set(_ => ({ did: "",isProcessingDid:false }))            
