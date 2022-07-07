@@ -36,13 +36,13 @@ func WasSetup() bool {
 func CheckPassErrors(pass string) error {
 
 	if pass == "" {
-		return fmt.Errorf("Password should not be blank")
+		return fmt.Errorf("password should not be blank")
 	} else if len(pass) <= 5 {
-		return fmt.Errorf("Password should be at least 6 characters")
+		return fmt.Errorf("password should be at least 6 characters")
 	} else if strings.ContainsAny(pass, " ") {
-		return fmt.Errorf("Password should not have space")
+		return fmt.Errorf("password should not have space")
 	} else if strings.ContainsAny(pass, "/[]'^$&()`{};:|\\,.<>]/") {
-		return fmt.Errorf("Password should not have special characters")
+		return fmt.Errorf("password should not have special characters")
 	}
 	return nil
 
@@ -50,6 +50,7 @@ func CheckPassErrors(pass string) error {
 
 // use to generate keystore
 func generateKeystore(pass string) error {
+	logger.GetInstance().Debug().Msg("generating keystore")
 	cliPath := global.CLI_DIR_PATH + "/ela-cli"
 	dataPath := global.KEYSTORE_DIR_PATH
 	if err := os.MkdirAll(dataPath, perm.PUBLIC_WRITE); err != nil {
@@ -69,6 +70,7 @@ func generateKeystore(pass string) error {
 }
 
 func changeSystemPassword(pass string) error {
+	logger.GetInstance().Debug().Msg("updating password")
 	stdinPass := "elabox:" + pass
 	cmd := exec.Command("chpasswd")
 	stdin, err := cmd.StdinPipe()
