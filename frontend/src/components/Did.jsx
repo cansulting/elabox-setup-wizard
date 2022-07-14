@@ -17,7 +17,12 @@ export default function Did({increaseSteps,decreaseSteps}){
     const hasDid = did.length > 0
     const handleDidClick = () => {
         if(!isProcessingDid){
-            processDid()
+            if(!hasDid){
+                processDid()
+            }
+            else if(hasDid){
+                signOut()
+            }
         }
     }
     const handleNextOrSkipClick = () =>{
@@ -26,7 +31,6 @@ export default function Did({increaseSteps,decreaseSteps}){
             initDoneSetup()              
             return;
         }
-             
         signOut()
     }
     useEffect(() => {
@@ -54,10 +58,9 @@ export default function Did({increaseSteps,decreaseSteps}){
             </p>
             <button 
             className={`btn btn-secondary ${ButtonStyle['essentials']} ${hasDid ? ButtonStyle['success']:''}`} 
-            disabled={hasDid}
             onClick={handleDidClick}>
                 {isProcessingDid && "Open your essentials to confirm your DID"}
-                {hasDid && !isProcessingDid && "Connected"}
+                {hasDid && !isProcessingDid && "Disconnect"}
                 {!hasDid && !isProcessingDid && "Connect Essentials"}
             </button>        
         </>}
