@@ -1,4 +1,7 @@
 import  { lazy, Suspense, useEffect } from 'react'
+import {
+  Helmet
+} from "react-helmet";
 import Spinner from './components/partials/Spinner'
 import useErrorStore from './store/error'
 import useSetupStore from './store/setUp'
@@ -22,6 +25,11 @@ function App() {
   },[])
   return (
     <div className="App">
+      <Helmet>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+      </Helmet>      
       <Suspense fallback={<Spinner type="dotted"/>}>
         {hasError ? <Error/> : <Wizard/>}
         <InstallerDetails/>
