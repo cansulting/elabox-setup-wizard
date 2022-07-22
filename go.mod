@@ -4,13 +4,14 @@ go 1.17
 
 replace github.com/cansulting/elabox-system-tools => ../elabox-system-tools
 
-require github.com/cansulting/elabox-system-tools v0.0.0-20220321061202-fdda759ef76c
+require github.com/cansulting/elabox-system-tools v0.0.0-20220701043013-02b655cee6c4
 
 require (
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/jaypipes/pcidb v1.0.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.8 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect

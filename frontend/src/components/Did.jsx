@@ -45,17 +45,16 @@ export default function Did({increaseSteps,decreaseSteps}){
     }    
     return <div className={DidStyle['app-did']}>
         <h1>Sign-in with DID</h1>
+        <p>
+            This allows you to connect to DID network and own your data. 
+            <br/>
+            With DIDs you can share with any DApps.    
+        </p>
         {isSetup ? 
         <>
             <SetUpCompleted/>
         </>:
         <>
-            
-            <p>
-                This allows you to connect to DID network and own your data. 
-                <br/>
-                With DIDs you can share with any DApps.    
-            </p>
             <button 
             className={`btn btn-secondary ${ButtonStyle['essentials']} ${hasDid ? ButtonStyle['success']:''}`} 
             onClick={handleDidClick}>

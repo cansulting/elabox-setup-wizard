@@ -57,12 +57,12 @@ export default function Storage({decreaseSteps,increaseSteps}){
             onClose={handleOnCloseWarningModal}
             onConfirm={handleOnConfirmWarningModal}
         />
+        <h1>Connect External Storage</h1>
+            <p>Expand your storage for data demanding nodes and services.</p>
         {isSetup ? 
         <>
             <SetUpCompleted/>
         </>:<>
-            <h1>Connect External Storage</h1>
-            <p>Expand your storage for data demanding nodes and services.</p>
             {!isExternalStorageConnected ? <div>
                 <Spinner/>
                 <p>Waiting for storage to be connected</p>            

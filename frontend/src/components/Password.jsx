@@ -58,14 +58,14 @@ export default function Password({increaseSteps,decreaseSteps}){
         return <Spinner/>
     }
     return <div className={PasswordStyle['app-password']}>
+        <h1 className={PasswordStyle['header']}>Wallet Password</h1>
+        <p className={PasswordStyle['intro']}>
+            Build, sign and send transactions with security and trust.
+        </p>
         {isSetup ? 
             <SetUpCompleted/>
         :
             <>
-                <h1 className={PasswordStyle['header']}>Wallet Password</h1>
-                <p className={PasswordStyle['intro']}>
-                    Build, sign and send transactions with security and trust.
-                </p>
                 <form>
                     <h3 className={PasswordStyle['header3']}>Setup Password</h3>            
                     <input id="pwd1" className={FormStyle['input']} type="password" onChange={handleChange}/>            
