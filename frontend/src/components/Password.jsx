@@ -37,7 +37,7 @@ export default function Password({increaseSteps,decreaseSteps}){
         increaseSteps()
     }
     const handlePrevClick = () => {
-        decreaseSteps(2)
+        decreaseSteps(1)
     }
     useEffect(()=>{
         initSetup()
