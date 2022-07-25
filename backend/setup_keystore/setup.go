@@ -29,7 +29,6 @@ func WasSetup() bool {
 			return false
 		}
 	}
-
 	return true
 }
 
@@ -100,7 +99,7 @@ func Setup(password string) error {
 		return errors.New("failed to generate keystore. " + err.Error())
 	}
 	if err := changeSystemPassword(password); err != nil {
-		return errors.New("failed changed system password")
+		return errors.New("failed changed system password, " + err.Error())
 	}
 	return nil
 }

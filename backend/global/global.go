@@ -17,6 +17,7 @@ const CLI_DIR_PATH = HOME_DIR + "/apps/ela.mainchain"
 const KEYSTORE_DIR_PATH = HOME_DIR + "/documents/ela.mainchain"
 const OLD_KEYSTORE_DIR_PATH = HOME_DIR + "/data/ela.mainchain" // for old version of keystore
 const KEYSTORE_FILENAME = "keystore.dat"
+const TMP_DIR = "/home/tmp"
 
 // actions
 const INIT_SETUP = "setup.actions.INIT"          // initialize setup

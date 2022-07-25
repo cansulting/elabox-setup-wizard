@@ -22,17 +22,13 @@ var lastDrives []*block.Disk = nil
 
 // return true if already setup
 func Init() (bool, []data.StorageInfo) {
-	if WasSetup() {
-		return true, nil
-	}
-
 	storages := make([]data.StorageInfo, 0)
 	if lastDrives != nil {
 		storages = getStorageInfo(lastDrives)
 	}
 	if initialized {
 		broadcast.PublishStorageChanged(storages)
-		return false, storages
+		return WasSetup(), storages
 	}
 
 	initialized = true
@@ -57,7 +53,7 @@ func Init() (bool, []data.StorageInfo) {
 			time.Sleep(time.Second)
 		}
 	}()
-	return false, storages
+	return WasSetup(), storages
 }
 
 func isArryEquals(param1 []*block.Disk, param2 []*block.Disk) bool {
@@ -100,18 +96,24 @@ func InitDone() {
 
 // return true if already setup
 func WasSetup() bool {
-	return false
+	// look up for fstab
+	search := "/home/elabox"
+	con, err := os.ReadFile("/etc/fstab")
+	if err != nil {
+		return false
+	}
+	return strings.Contains(string(con), search)
 }
 
 func UpdateFstab(storageId string, cwd string, homeDir string) error {
 	stmt := "sudo blkid | grep /dev/" + storageId + " | cut -d '\"' -f 2"
-	output, err := utils.RunBashStmt(stmt, cwd)
-	output = strings.TrimRight(output, "\n")
-	print(output)
+	uuid, err := utils.RunBashStmt(stmt, cwd)
+	uuid = strings.TrimRight(uuid, "\n")
+	//print(output)
 	if err != nil {
 		return errors.SystemNew("failed to update fstab", err)
 	}
-	stmt = "echo '\nUUID=" + output + " " + homeDir + " ext4 defaults 0 0' | "
+	stmt = "echo '\nUUID=" + uuid + " " + homeDir + " ext4 defaults 0 0' | "
 	stmt += "tee -a /etc/fstab > /dev/null"
 	if _, err := utils.RunBashStmt(stmt, cwd); err != nil {
 		return errors.SystemNew("failed to update fstab", err)
@@ -162,12 +164,6 @@ func SetupAtHome(storageId string, homePath string) error {
 		if err := UpdateFstab(storageId, dir, homeDir); err != nil {
 			return err
 		}
-		// if err := utils.RunBashFile(
-		// 	"storage.sh "+storageId+" "+homePath,
-		// 	dir,
-		// ); err != nil {
-		// 	return err
-		// }
 	} else {
 		logger.GetInstance().Debug().Msg("external storage setup skip")
 	}

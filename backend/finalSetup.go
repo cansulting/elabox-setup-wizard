@@ -4,7 +4,9 @@ import (
 	"elabox-setup/backend/broadcast"
 	"elabox-setup/backend/global"
 	"elabox-setup/backend/utils"
+	"errors"
 
+	"github.com/cansulting/elabox-system-tools/foundation/env"
 	"github.com/cansulting/elabox-system-tools/foundation/event/data"
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 )
@@ -17,6 +19,15 @@ func SetupSwapping() error {
 
 func MarkAsSuccess() error {
 	_, err := global.Controller.RPC.CallSystem(data.NewActionById(global.SYSTEM_CONFIGURED))
-	broadcast.PublishSetupSuccess()
-	return err
+	if err != nil {
+		return errors.New("failed to call action ela.system.CONFIGURED, " + err.Error())
+	}
+	if err := broadcast.PublishSetupSuccess(); err != nil {
+		logger.GetInstance().Debug().Err(err).Msg("failed to publish success.")
+	}
+	return env.SetEnv("config", "1")
+}
+
+func IsSuccess() bool {
+	return env.GetEnv("config") == "1"
 }
