@@ -90,6 +90,19 @@ func getStorageInfo(disks []*block.Disk) []data.StorageInfo {
 	return storages
 }
 
+func getStorageDiskById(id string) (*block.Disk, error) {
+	blk, err := ghw.Block()
+	if err != nil {
+		return nil, err
+	}
+	for _, disk := range blk.Disks {
+		if disk.Name == id {
+			return disk, nil
+		}
+	}
+	return nil, nil
+}
+
 func InitDone() {
 	initialized = false
 }
@@ -134,16 +147,23 @@ func SetupAtHome(storageId string, homePath string) error {
 		if system.IDE {
 			dir = "../build"
 		}
-		// step: move elabox file to tmp
-		if err := utils.CopyDirectory(homeDir, tmpDir); err != nil {
-			return errors.SystemNew("failed to copy from "+homeDir+" to "+tmpDir, err)
+		if err := ValidateStorage(storageId); err != nil {
+			return err
 		}
-		// remove home
-		if err := os.RemoveAll(homeDir); err != nil {
-			logger.GetInstance().Error().Err(err).Msg("failed to remove " + homeDir + ", continue.")
+		// step: move elabox home to tmp before formatting
+		_, h_err := os.Stat(homeDir)
+		_, t_err := os.Stat(tmpDir)
+		if h_err == nil && t_err != nil {
+			if err := utils.CopyDirectory(homeDir, tmpDir); err != nil {
+				return errors.SystemNew("failed to copy from "+homeDir+" to "+tmpDir, err)
+			}
+			// remove home
+			if err := os.RemoveAll(homeDir); err != nil {
+				logger.GetInstance().Error().Err(err).Msg("failed to remove " + homeDir + ", continue.")
+			}
 		}
 		// step: mount storage and make it home
-		if _, err := utils.RunBashStmt("echo 'y' |  mkfs.ext4 /dev/"+storageId, dir); err != nil {
+		if _, err := utils.RunBashStmt("echo 'y' |  sudo mkfs.ext4 /dev/"+storageId, dir); err != nil {
 			return errors.SystemNew("failed to partition storage "+storageId, err)
 		}
 		if err := os.MkdirAll(homeDir, perm.PUBLIC); err != nil {
@@ -167,5 +187,22 @@ func SetupAtHome(storageId string, homePath string) error {
 	} else {
 		logger.GetInstance().Debug().Msg("external storage setup skip")
 	}
+	return nil
+}
+
+func ValidateStorage(storageId string) error {
+	// step: validate storage
+	disk, err := getStorageDiskById(storageId)
+	if err != nil {
+		return errors.SystemNew("failed to process storage with id "+storageId, err)
+	}
+	if disk == nil {
+		return errors.SystemNew("storage was not found, please attach it.", nil)
+	}
+	// for _, part := range disk.Partitions {
+	// 	if part.IsReadOnly {
+	// 		return errors.SystemNew("disk is read-only", nil)
+	// 	}
+	// }
 	return nil
 }

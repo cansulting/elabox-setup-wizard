@@ -6,9 +6,9 @@ import (
 	"elabox-setup/backend/utils"
 	"errors"
 
-	"github.com/cansulting/elabox-system-tools/foundation/env"
 	"github.com/cansulting/elabox-system-tools/foundation/event/data"
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
+	"github.com/cansulting/elabox-system-tools/foundation/system"
 )
 
 func SetupSwapping() error {
@@ -25,9 +25,9 @@ func MarkAsSuccess() error {
 	if err := broadcast.PublishSetupSuccess(); err != nil {
 		logger.GetInstance().Debug().Err(err).Msg("failed to publish success.")
 	}
-	return env.SetEnv("config", "1")
+	return system.SetEnv("config", "1")
 }
 
 func IsSuccess() bool {
-	return env.GetEnv("config") == "1"
+	return system.GetEnv("config") == "1"
 }
