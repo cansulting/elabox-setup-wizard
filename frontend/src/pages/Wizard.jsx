@@ -37,7 +37,6 @@ export default function Wizard(){
     }
     useEffect(() => {
         initSetup()
-        console.log("status",setupStatus)
         if (setupStatus === SETUP_INPROGRESS) {
             onBeginSetup()
         } else { 
