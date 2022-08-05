@@ -50,9 +50,9 @@ func CheckPassErrors(pass string) error {
 // use to generate keystore
 func generateKeystore(pass string) error {
 	logger.GetInstance().Debug().Msg("generating keystore")
-	cliPath := global.CLI_DIR_PATH + "/ela-cli"
-	dataPath := global.KEYSTORE_DIR_PATH
-	if err := os.MkdirAll(dataPath, perm.PUBLIC_WRITE); err != nil {
+	dir, _ := os.Getwd()
+	cliPath := dir + "/ela-cli"
+	if err := os.MkdirAll(global.KEYSTORE_DIR_PATH, perm.PUBLIC_WRITE); err != nil {
 		return errors.New("unable to create dir, " + err.Error())
 	}
 	// step: exec cli
@@ -62,7 +62,7 @@ func generateKeystore(pass string) error {
 		"-p",
 		pass,
 	)
-	cmd.Dir = dataPath
+	cmd.Dir = global.KEYSTORE_DIR_PATH
 	contents, err := cmd.CombinedOutput()
 	logger.GetInstance().Debug().Msg(string(contents))
 	return err

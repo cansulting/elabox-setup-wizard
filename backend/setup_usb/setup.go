@@ -142,25 +142,12 @@ func Setup(storageId string) error {
 func SetupAtHome(storageId string, homePath string) error {
 	if storageId != "" {
 		homeDir := "/home/elabox"
-		tmpDir := "/home/tmp"
 		dir := ""
 		if system.IDE {
 			dir = "../build"
 		}
 		if err := ValidateStorage(storageId); err != nil {
 			return err
-		}
-		// step: move elabox home to tmp before formatting
-		_, h_err := os.Stat(homeDir)
-		_, t_err := os.Stat(tmpDir)
-		if h_err == nil && t_err != nil {
-			if err := utils.CopyDirectory(homeDir, tmpDir); err != nil {
-				return errors.SystemNew("failed to copy from "+homeDir+" to "+tmpDir, err)
-			}
-			// remove home
-			if err := os.RemoveAll(homeDir); err != nil {
-				logger.GetInstance().Error().Err(err).Msg("failed to remove " + homeDir + ", continue.")
-			}
 		}
 		// step: mount storage and make it home
 		if _, err := utils.RunBashStmt("echo 'y' |  sudo mkfs.ext4 /dev/"+storageId, dir); err != nil {
@@ -171,14 +158,6 @@ func SetupAtHome(storageId string, homePath string) error {
 		}
 		if _, err := utils.RunBashStmt("mount /dev/"+storageId+" "+homeDir, dir); err != nil {
 			return errors.SystemNew("failed to mount storage "+storageId, err)
-		}
-		// step: move tmp to the new home
-		if err := utils.CopyDirectory(tmpDir, homeDir); err != nil {
-			return errors.SystemNew("failed to copy "+tmpDir+" to "+homeDir, err)
-		}
-		// remove tmp
-		if err := os.RemoveAll(tmpDir); err != nil {
-			logger.GetInstance().Error().Err(err).Msg("failed to remove " + tmpDir + ", continue.")
 		}
 		// step: update fstab
 		if err := UpdateFstab(storageId, dir, homeDir); err != nil {
