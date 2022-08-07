@@ -16,6 +16,7 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
+    gap: 1em;
 }
 .group-flex-end{
     display: flex;
@@ -24,6 +25,7 @@
 }
 .essentials{
     margin-bottom: 5em;
+    min-width: 10em;
 }
 .group > button{
     margin-top: 1em;
@@ -48,3 +50,13 @@
 .start{
     margin-top: 2em;
 }
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .group{
+        flex-direction: column;
+        align-items: center;
+    }
+    .group > button{
+        width: 100%;
+    }
+} 
