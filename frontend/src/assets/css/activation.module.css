@@ -1,5 +1,6 @@
 .app-activation{
     width:40vw;
+    min-width: 300px;
 }
 .table-container{
     overflow:auto;

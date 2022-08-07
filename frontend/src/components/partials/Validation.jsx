@@ -13,8 +13,11 @@ export default function Validation({label, validation =()=>{},src}) {
   return (
     <p 
     style={{
-        fontSize:12,display:"flex",
-        justifyContent:"flex-start",alignItems:"center"
+        fontSize:12,
+        display:"flex",
+        justifyContent:"flex-start",
+        alignItems:"center",
+        whiteSpace:"nowrap",
         }}>
         {icon} <span style={{marginLeft:"0.5em"}}>{label}</span>
     </p>

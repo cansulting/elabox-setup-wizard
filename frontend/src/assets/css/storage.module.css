@@ -1,5 +1,6 @@
 .app-storage {
     width: 30vw;
+    min-width: 300px;
 }
 .storages{
     width: 100%;
