@@ -48,6 +48,12 @@ export default function Wizard(){
         }
     //eslint-disable-next-line
     },[setupStatus, setStep])
+    useEffect(()=>{
+        const skipKeystore = window.location.href.includes("/skipkeystore")
+        if(steps === 5 && skipKeystore){
+            setStep(6)
+        }
+    },[steps])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}
