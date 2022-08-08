@@ -1,8 +1,10 @@
 import {lazy, Suspense, useEffect, useState} from "react"
+import { isKeystoreWillBeGenerated } from "../utils/config"
 import useStepsStore from "../store/steps"
 import useSetupStore from "../store/setUp"
 import WizardStyle from "../assets/css/wizard.module.css"
 import Logo from "../components/partials/Logo"
+
 const Welcome = lazy(() => import('../components/Welcome'))
 const Storage = lazy(() => import('../components/Storage'))
 const Did = lazy(() => import('../components/Did'))
@@ -28,7 +30,9 @@ export default function Wizard(){
     const onBeginSetup = () => {
         setSetupInitiated(true)
         startSetup()
-        setDlkey(true)
+        if (isKeystoreWillBeGenerated){
+            setDlkey(true)
+        }
         setStep(6)
     }
     // called after downloaded the keystore
@@ -48,12 +52,6 @@ export default function Wizard(){
         }
     //eslint-disable-next-line
     },[setupStatus, setStep])
-    useEffect(()=>{
-        const skipKeystore = window.location.href.includes("/skipkeystore")
-        if(steps === 5 && skipKeystore){
-            setStep(6)
-        }
-    },[steps])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
             {steps !== 5 && <Logo/>}

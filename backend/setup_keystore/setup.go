@@ -87,7 +87,7 @@ func changeSystemPassword(pass string) error {
 	return nil
 }
 
-func Setup(password string) error {
+func Setup(password string, skipkeystoregeneration bool) error {
 	if password == "" {
 		logger.GetInstance().Debug().Msg("password setup skiped.")
 		return nil
@@ -95,8 +95,12 @@ func Setup(password string) error {
 	if err := CheckPassErrors(password); err != nil {
 		return err
 	}
-	if err := generateKeystore(password); err != nil {
-		return errors.New("failed to generate keystore. " + err.Error())
+	if skipkeystoregeneration {
+		logger.GetInstance().Debug().Msg("keystore generation skipped.")
+	} else {
+		if err := generateKeystore(password); err != nil {
+			return errors.New("failed to generate keystore. " + err.Error())
+		}
 	}
 	if err := changeSystemPassword(password); err != nil {
 		return errors.New("failed changed system password, " + err.Error())

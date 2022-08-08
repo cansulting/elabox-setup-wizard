@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { isKeystoreWillBeGenerated } from '../utils/config';
 import SetupStyle from "../assets/css/setup.module.css"
 import useDidStore from '../store/did';
 import usePasswordStore from '../store/password';
@@ -15,7 +16,8 @@ export default function SetUp(){
         const data = {
             did,
             password,
-            storage_id
+            storage_id,
+            skipKeystoreGeneration: isKeystoreWillBeGenerated
         }
         processSetUp(data)
         // eslint-disable-next-line        
