@@ -1,1 +1,1 @@
-export const isKeystoreWillBeGenerated = true
+export const isKeystoreWillBeGenerated = false
