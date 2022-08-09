@@ -10,7 +10,7 @@
     background-color: #004e98;
 }
 .group{
-    margin-top: 2em !important;
+    margin-top: 2em;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -25,7 +25,7 @@
 }
 .essentials{
     margin-bottom: 5em;
-    min-width: 10em;
+    min-width: 9em;
 }
 .group > button{
     margin-top: 1em;
@@ -58,5 +58,20 @@
     }
     .group > button{
         width: 100%;
+        margin-top: 0;
     }
 } 
+
+/* landcape media query*/
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .group{
+        margin-top: 0.5em;   
+    }
+    .group > button{
+        width: 100%;
+        margin-top: 0;
+    }
+    .essentials{
+        margin-top: 2em;
+    }
+}

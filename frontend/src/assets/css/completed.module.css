@@ -1,0 +1,16 @@
+.app-completed{
+    margin-top: 8vh;
+    margin-bottom: 8vh;
+}
+/* media query for small screens */
+@media only screen and (max-width: 600px) {
+    .app-completed{
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+    }
+}
+@media only screen and (max-height: 500px) and (orientation:landscape) {
+    .app-completed h2{
+        font-size: 12px;
+    }        
+}

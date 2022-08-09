@@ -3,3 +3,17 @@
     flex-direction: column;
     width:30vw;
 }
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .app-did{
+        width: 80vw;
+    }
+}
+@media only screen and (max-height: 500px) and (orientation:landscape) {
+    .app-did{
+        justify-content: flex-start;
+    }
+    .app-did > h1{
+        margin:0;
+    }    
+}

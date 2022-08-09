@@ -1,5 +1,5 @@
 .app-activation{
-    width:40vw;
+    width:20vw;
     min-width: 300px;
 }
 .table-container{
@@ -13,4 +13,13 @@
     width:100%;
     margin-top: 1em;
     border-collapse: collapse;   
+}
+/* landscape orientation*/
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .app-activation > h1{
+        margin:0;
+    }
+    .app-activation > .table-container {
+        margin-top: 0.1em;
+    }
 }
