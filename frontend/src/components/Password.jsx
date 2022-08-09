@@ -62,7 +62,7 @@ export default function Password({increaseSteps,decreaseSteps}){
         <p className={PasswordStyle['intro']}>
             Build, sign and send transactions with security and trust.
         </p>
-        {!isSetup ? 
+        {isSetup ? 
             <SetUpCompleted/>
         :
             <>
