@@ -8,6 +8,9 @@
         margin-top: 3vh;
         margin-bottom: 3vh;
     }
+    .app-completed h2{
+        font-size: 12px;
+    }            
 }
 @media only screen and (max-height: 500px) and (orientation:landscape) {
     .app-completed h2{

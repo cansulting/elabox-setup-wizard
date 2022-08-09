@@ -90,6 +90,20 @@ button{
 p{
   margin:0.1em;
 }
+@media only screen and (max-width: 600px){
+  h1{
+    font-size: 1em;
+  }
+  p,button,input,label,h3{
+    font-size: 0.8em !important;
+  }
+  input{
+    font-size: 1em !important;
+  }
+  table{
+    font-size: 0.8em !important;
+  }
+}
 @media only screen and (max-height: 500px)  and (orientation: landscape) {
   h1{
     font-size: 1em;

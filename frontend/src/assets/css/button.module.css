@@ -55,6 +55,7 @@
     .group{
         flex-direction: column;
         align-items: center;
+        margin-top: 0.5em;
     }
     .group > button{
         width: 100%;
