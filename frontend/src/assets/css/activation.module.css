@@ -14,6 +14,11 @@
     margin-top: 1em;
     border-collapse: collapse;   
 }
+@media only screen and (max-width: 600px){
+    .app-activation{
+        width: 80vw;
+    }
+}
 /* landscape orientation*/
 @media only screen and (max-height: 500px) and (orientation: landscape) {
     .app-activation > h1{
