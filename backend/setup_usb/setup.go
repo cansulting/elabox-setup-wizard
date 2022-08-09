@@ -159,6 +159,10 @@ func SetupAtHome(storageId string, homePath string) error {
 		if _, err := utils.RunBashStmt("mount /dev/"+storageId+" "+homeDir, dir); err != nil {
 			return errors.SystemNew("failed to mount storage "+storageId, err)
 		}
+		// update permissions
+		if err := os.Chmod(homeDir, perm.PUBLIC_WRITE); err != nil {
+			return errors.SystemNew("failed to changed permission for home", err)
+		}
 		// step: update fstab
 		if err := UpdateFstab(storageId, dir, homeDir); err != nil {
 			return err
