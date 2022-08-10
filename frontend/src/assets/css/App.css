@@ -22,10 +22,14 @@
   }
   .elabox-logo{
     margin-top: 2em;
+    width: 1em;
+    height: 1em;
   }
 }
 @media only screen and (max-height: 500px) and (orientation:landscape) {
   .elabox-logo{
-    margin-top: 0.2em;
+    margin-top: 0.1em;
+    width: 1em;
+    height: 1em;
   }
 }
