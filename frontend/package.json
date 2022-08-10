@@ -5,9 +5,9 @@
   "type": "module",
   "dependencies": {
     "@aw-web-design/react-feather": "^4.1.22",
-    "@elabox/essentials-connector-client-browser": "1.0.46",
+    "@elabox/essentials-connector-client-browser": "1.0.47",
     "@elastosfoundation/did-js-sdk": "^2.2.9",
-    "@elastosfoundation/elastos-connectivity-sdk-js": "^1.0.23",
+    "@elastosfoundation/elastos-connectivity-sdk-js": "^1.1.4",
     "@walletconnect/web3-provider": "^1.7.8",
     "elabox-foundation": "^1.1.7",
     "react": "^18.1.0",
