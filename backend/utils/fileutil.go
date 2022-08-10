@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"syscall"
+
+	"github.com/cansulting/elabox-system-tools/foundation/logger"
 )
 
 func CopyDirectory(scrDir, dest string) error {
@@ -42,7 +44,8 @@ func CopyDirectory(scrDir, dest string) error {
 			}
 		default:
 			if err := Copy(sourcePath, destPath); err != nil {
-				return err
+				logger.GetInstance().Error().Err(err).Msg("failed to copy from " + sourcePath + "," + err.Error())
+				continue
 			}
 		}
 

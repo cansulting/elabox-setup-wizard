@@ -16,7 +16,8 @@ function App() {
   const initSetup = useSetupStore(state => state.initSetup)
   const initErrorSetup = useErrorStore (state => state.initSetup)
   const hasError = useErrorStore(state => state.hasError)
-  const  getInstallerInfo = useBuildStore(state => state.getInstallerInfo)
+  const getInstallerInfo = useBuildStore(state => state.getInstallerInfo)
+  const isOnionUrl = window.location.href.includes(".onion")
   useEffect(()=>{
     initSetup()
     initErrorSetup()
@@ -25,11 +26,11 @@ function App() {
   },[])
   return (
     <div className="App">
-      <Helmet>
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Expires" content="0" />
-      </Helmet>      
+        {!isOnionUrl && <Helmet>
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+            <meta http-equiv="Pragma" content="no-cache" />
+            <meta http-equiv="Expires" content="0" />                
+          </Helmet>}      
       <Suspense fallback={<Spinner type="dotted"/>}>
         {hasError ? <Error/> : <Wizard/>}
         <InstallerDetails/>

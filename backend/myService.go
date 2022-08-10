@@ -96,17 +96,25 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 			broadcast.PublishError(rpc.INVALID_CODE, "error setup, "+err.Error())
 			return
 		}
-		if err := setup_usb.Setup(datam["storage_id"].(string)); err != nil {
-			broadcast.PublishError(rpc.INVALID_CODE, "external storage setup failed, "+err.Error())
+		if err := Preparations(); err != nil {
+			broadcast.PublishError(rpc.INVALID_CODE, "pre-setup failed, "+err.Error())
 			return
+		}
+		if !setup_usb.WasSetup() {
+			if err := setup_usb.Setup(datam["storage_id"].(string)); err != nil {
+				broadcast.PublishError(rpc.INVALID_CODE, "external storage setup failed, "+err.Error())
+				return
+			}
 		}
 		if err := setup_did.Setup(datam["did"].(string)); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "did setup failed, "+err.Error())
 			return
 		}
-		if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
-			broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
-			return
+		if !setup_keystore.WasSetup() {
+			if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
+				broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
+				return
+			}
 		}
 		if err := SetupSwapping(); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
@@ -125,7 +133,7 @@ func (instance *MyService) checkSetupStatus(client protocol.ClientInterface, act
 	setup := "setup"
 	if settingUp {
 		setup = "setting_up"
-	} else if !setup_keystore.WasSetup() {
+	} else if !IsSuccess() {
 		setup = "unsetup"
 	}
 	return rpc.CreateSuccessResponse(setup)

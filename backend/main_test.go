@@ -82,9 +82,19 @@ func Test_PasswordCheck_Failed(t *testing.T) {
 	}
 }
 
-// func TestUpdateStab(t *testing.T) {
-// 	logger.Init("ela.setup.test")
-// 	if err := setup_usb.UpdateFstab("sdb", "", "/home/elabox"); err != nil {
-// 		t.Error(err)
-// 	}
-// }
+func TestUpdateStab(t *testing.T) {
+	logger.Init("ela.setup.test")
+	if !setup_usb.WasSetup() {
+		if err := setup_usb.UpdateFstab("sdb", "", "/home/elabox"); err != nil {
+			t.Error(err)
+		}
+	}
+}
+
+func TestValidateUsb(t *testing.T) {
+	logger.Init("ela.setup.test")
+	storage := "sda"
+	if err := setup_usb.ValidateStorage(storage); err != nil {
+		t.Error("invalid storage "+storage, err)
+	}
+}

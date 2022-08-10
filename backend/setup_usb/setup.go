@@ -22,17 +22,13 @@ var lastDrives []*block.Disk = nil
 
 // return true if already setup
 func Init() (bool, []data.StorageInfo) {
-	if WasSetup() {
-		return true, nil
-	}
-
 	storages := make([]data.StorageInfo, 0)
 	if lastDrives != nil {
 		storages = getStorageInfo(lastDrives)
 	}
 	if initialized {
 		broadcast.PublishStorageChanged(storages)
-		return false, storages
+		return WasSetup(), storages
 	}
 
 	initialized = true
@@ -57,7 +53,7 @@ func Init() (bool, []data.StorageInfo) {
 			time.Sleep(time.Second)
 		}
 	}()
-	return false, storages
+	return WasSetup(), storages
 }
 
 func isArryEquals(param1 []*block.Disk, param2 []*block.Disk) bool {
@@ -94,24 +90,43 @@ func getStorageInfo(disks []*block.Disk) []data.StorageInfo {
 	return storages
 }
 
+func getStorageDiskById(id string) (*block.Disk, error) {
+	blk, err := ghw.Block()
+	if err != nil {
+		return nil, err
+	}
+	for _, disk := range blk.Disks {
+		if disk.Name == id {
+			return disk, nil
+		}
+	}
+	return nil, nil
+}
+
 func InitDone() {
 	initialized = false
 }
 
 // return true if already setup
 func WasSetup() bool {
-	return false
+	// look up for fstab
+	search := "/home/elabox"
+	con, err := os.ReadFile("/etc/fstab")
+	if err != nil {
+		return false
+	}
+	return strings.Contains(string(con), search)
 }
 
 func UpdateFstab(storageId string, cwd string, homeDir string) error {
 	stmt := "sudo blkid | grep /dev/" + storageId + " | cut -d '\"' -f 2"
-	output, err := utils.RunBashStmt(stmt, cwd)
-	output = strings.TrimRight(output, "\n")
-	print(output)
+	uuid, err := utils.RunBashStmt(stmt, cwd)
+	uuid = strings.TrimRight(uuid, "\n")
+	//print(output)
 	if err != nil {
 		return errors.SystemNew("failed to update fstab", err)
 	}
-	stmt = "echo '\nUUID=" + output + " " + homeDir + " ext4 defaults 0 0' | "
+	stmt = "echo '\nUUID=" + uuid + " " + homeDir + " ext4 defaults 0 0' | "
 	stmt += "tee -a /etc/fstab > /dev/null"
 	if _, err := utils.RunBashStmt(stmt, cwd); err != nil {
 		return errors.SystemNew("failed to update fstab", err)
@@ -127,21 +142,15 @@ func Setup(storageId string) error {
 func SetupAtHome(storageId string, homePath string) error {
 	if storageId != "" {
 		homeDir := "/home/elabox"
-		tmpDir := "/home/tmp"
 		dir := ""
 		if system.IDE {
 			dir = "../build"
 		}
-		// step: move elabox file to tmp
-		if err := utils.CopyDirectory(homeDir, tmpDir); err != nil {
-			return errors.SystemNew("failed to copy from "+homeDir+" to "+tmpDir, err)
-		}
-		// remove home
-		if err := os.RemoveAll(homeDir); err != nil {
-			logger.GetInstance().Error().Err(err).Msg("failed to remove " + homeDir + ", continue.")
+		if err := ValidateStorage(storageId); err != nil {
+			return err
 		}
 		// step: mount storage and make it home
-		if _, err := utils.RunBashStmt("echo 'y' |  mkfs.ext4 /dev/"+storageId, dir); err != nil {
+		if _, err := utils.RunBashStmt("echo 'y' |  sudo mkfs.ext4 /dev/"+storageId, dir); err != nil {
 			return errors.SystemNew("failed to partition storage "+storageId, err)
 		}
 		if err := os.MkdirAll(homeDir, perm.PUBLIC); err != nil {
@@ -150,26 +159,33 @@ func SetupAtHome(storageId string, homePath string) error {
 		if _, err := utils.RunBashStmt("mount /dev/"+storageId+" "+homeDir, dir); err != nil {
 			return errors.SystemNew("failed to mount storage "+storageId, err)
 		}
-		// step: move tmp to the new home
-		if err := utils.CopyDirectory(tmpDir, homeDir); err != nil {
-			return errors.SystemNew("failed to copy "+tmpDir+" to "+homeDir, err)
-		}
-		// remove tmp
-		if err := os.RemoveAll(tmpDir); err != nil {
-			logger.GetInstance().Error().Err(err).Msg("failed to remove " + tmpDir + ", continue.")
+		// update permissions
+		if err := os.Chmod(homeDir, perm.PUBLIC_WRITE); err != nil {
+			return errors.SystemNew("failed to changed permission for home", err)
 		}
 		// step: update fstab
 		if err := UpdateFstab(storageId, dir, homeDir); err != nil {
 			return err
 		}
-		// if err := utils.RunBashFile(
-		// 	"storage.sh "+storageId+" "+homePath,
-		// 	dir,
-		// ); err != nil {
-		// 	return err
-		// }
 	} else {
 		logger.GetInstance().Debug().Msg("external storage setup skip")
 	}
+	return nil
+}
+
+func ValidateStorage(storageId string) error {
+	// step: validate storage
+	disk, err := getStorageDiskById(storageId)
+	if err != nil {
+		return errors.SystemNew("failed to process storage with id "+storageId, err)
+	}
+	if disk == nil {
+		return errors.SystemNew("storage was not found, please attach it.", nil)
+	}
+	// for _, part := range disk.Partitions {
+	// 	if part.IsReadOnly {
+	// 		return errors.SystemNew("disk is read-only", nil)
+	// 	}
+	// }
 	return nil
 }

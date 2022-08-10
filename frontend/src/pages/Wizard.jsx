@@ -24,7 +24,9 @@ export default function Wizard(){
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
     const setStep = useStepsStore( state => state.setStep)
     const [dlkey, setDlkey] = useState(false)
+    const [setupInitiated, setSetupInitiated] = useState(false)
     const onBeginSetup = () => {
+        setSetupInitiated(true)
         startSetup()
         setDlkey(true)
         setStep(6)
@@ -35,11 +37,15 @@ export default function Wizard(){
     }
     useEffect(() => {
         initSetup()
-        console.log(setupStatus)
-        if (setupStatus === SETUP_INPROGRESS) 
+        if (setupStatus === SETUP_INPROGRESS) {
             onBeginSetup()
-        else if (setupStatus === SETUP_DONE)
-            setStep(7)
+        } else { 
+            const isConfigRoute = window.location.href.includes("/config")
+            if(!isConfigRoute || setupInitiated){
+                if (setupStatus === SETUP_DONE)
+                    setStep(7)
+            }
+        }
     //eslint-disable-next-line
     },[setupStatus, setStep])
     return <div className={WizardStyle["app-wizard"]}>
