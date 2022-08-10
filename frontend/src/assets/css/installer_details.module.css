@@ -2,8 +2,8 @@
     position: absolute;
     display: flex;
     gap: 0.5em;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0.8em;
+    right: 0.8em;
     color: white;
 }
 .app-installer-details p{

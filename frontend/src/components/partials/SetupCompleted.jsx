@@ -1,9 +1,9 @@
 import * as Icon from "@aw-web-design/react-feather"
-
+import CompletedStyle from "../../assets/css/completed.module.css"
 export default function SetUpCompleted(){
-    return <div style={{marginTop:"8vh", marginBottom:"8vh"}}>
+    return <div className={CompletedStyle['app-completed']}>
         <span>
-            <Icon.CheckCircle color="green" size={"10vh"}/>            
+            <Icon.CheckCircle color="green" size={"10vw"}/>            
         </span>
         <span>
             <h2>Completed</h2>    

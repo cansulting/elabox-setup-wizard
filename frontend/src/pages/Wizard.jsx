@@ -50,7 +50,7 @@ export default function Wizard(){
     },[setupStatus, setStep])
     return <div className={WizardStyle["app-wizard"]}>
         <Suspense fallback={<></>}>
-            {steps !== 5 && <Logo/>}
+            <Logo/>            
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Activation increaseSteps={increaseSteps}/>}
             {steps === 3 && <Storage decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
