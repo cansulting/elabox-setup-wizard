@@ -1,5 +1,6 @@
 .app-activation{
-    width:40vw;
+    width:30vw;
+    min-width: 300px;
 }
 .table-container{
     overflow:auto;
@@ -12,4 +13,18 @@
     width:100%;
     margin-top: 1em;
     border-collapse: collapse;   
+}
+@media only screen and (max-width: 600px){
+    .app-activation{
+        width: 80vw;
+    }
+}
+/* landscape orientation*/
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .app-activation > h1{
+        margin:0;
+    }
+    .app-activation > .table-container {
+        margin-top: 0.1em;
+    }
 }

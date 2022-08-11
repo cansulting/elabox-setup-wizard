@@ -1,0 +1,12 @@
+.validation-message{
+    font-size: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+}
+@media only screen and (max-height: 500px) and (orientation:landscape) {
+    .validation-message{
+        font-size:  0.7em;
+    }
+}
