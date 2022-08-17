@@ -29,7 +29,7 @@ func Test_Usb(t *testing.T) {
 // expected an issue while generating keystore
 func Test_KeystoreGen_Failure(t *testing.T) {
 	logger.Init("ela.setup.test")
-	if err := setup_keystore.Setup("erwr"); err == nil {
+	if err := setup_keystore.Setup("erwr", true); err == nil {
 		t.Error("expected an error for password but nothing was recieved")
 	}
 }
@@ -45,7 +45,7 @@ func Test_KeystoreGen_Success(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	if err := setup_keystore.Setup("helloworld"); err != nil {
+	if err := setup_keystore.Setup("helloworld", true); err != nil {
 		t.Error(err)
 	}
 }
