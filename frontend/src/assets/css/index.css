@@ -69,7 +69,33 @@ button{
 .modal-content-icon{
   text-align: center;
 }
+.notification-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.notification-enter {
+  visibility: hidden;
+  transform: none;
+}
 
+.notification-enter.notification-enter-active {
+  visibility: visible;
+  transform: none;
+  transition: none;
+}
+
+.notification-exit {
+  visibility: visible;
+  transform: none;
+}
+
+.notification-exit.notification-exit-active {
+  visibility: hidden;
+  transform: none;
+  transition: none;
+}
 /* The Close Button */
 .close {
   position: absolute;  

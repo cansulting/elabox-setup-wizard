@@ -41,7 +41,8 @@ export default class Did {
             const presentation = await didAccess.requestCredentials(
                 {claims: [DID.standardNameClaim("Activate elabox", false)]}
             );
-            return presentation
+            const walletConnector = await this.connector.getWalletConnectProvider().getWalletConnector()
+            return {presentation,walletConnector}
         } catch (error) {
             console.log(error);
             return null

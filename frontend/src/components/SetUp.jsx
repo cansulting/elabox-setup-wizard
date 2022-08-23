@@ -11,13 +11,13 @@ import useWalletStore from '../store/wallet';
 export default function SetUp(){
     const storage_id = useStorageStore(state => state.storage)
     const did = useDidStore(state => state.did)
-    const wallet_address = useWalletStore(state=>state.wallet)    
+    const wallet = useWalletStore(state=>state.wallet)    
     const password = usePasswordStore(state => state.password)
     const processSetUp = useSetupStore(state=>state.processSetUp)
     useEffect(()=>{
         const data = {
             did,
-            wallet_address,            
+            wallet_address: wallet,            
             password,
             storage_id,
             skipKeystoreGeneration: isKeystoreWillBeGenerated
