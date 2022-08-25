@@ -53,7 +53,6 @@ export default function Did({increaseSteps,decreaseSteps}){
                 signOut()
             }
             else{
-                alert(walletConnector.accounts[0])
                 setWallet(walletConnector.accounts[0])
             }
         }    
