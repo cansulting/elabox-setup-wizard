@@ -11,6 +11,7 @@ import (
 
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
 	"github.com/cansulting/elabox-system-tools/foundation/perm"
+	"github.com/cansulting/elabox-system-tools/foundation/system"
 )
 
 // return true if already setup
@@ -24,12 +25,7 @@ func InitDone() {
 
 // return true if already setup/created
 func WasSetup() bool {
-	if _, err := os.Stat(global.KEYSTORE_DIR_PATH + "/" + global.KEYSTORE_FILENAME); err != nil {
-		if _, err := os.Stat(global.OLD_KEYSTORE_DIR_PATH + "/" + global.KEYSTORE_FILENAME); err != nil {
-			return false
-		}
-	}
-	return true
+	return system.GetEnv("config") == "1"
 }
 
 func CheckPassErrors(pass string) error {
