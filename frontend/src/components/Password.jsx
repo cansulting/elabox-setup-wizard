@@ -12,7 +12,7 @@ import PasswordStyle from "../assets/css/password.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import FormStyle from "../assets/css/form.module.css"
 import usePasswordStore from "../store/password"
-import {isKeystoreWillBeGenerated} from "../utils/keystore"
+import {isKeystoreWillBeGenerated} from "../utils/config"
 
 export default function Password({increaseSteps,decreaseSteps}){
     const [pwd1, setPwd1] = useState('')
