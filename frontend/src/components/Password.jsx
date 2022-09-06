@@ -12,6 +12,7 @@ import PasswordStyle from "../assets/css/password.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import FormStyle from "../assets/css/form.module.css"
 import usePasswordStore from "../store/password"
+import {isKeystoreWillBeGenerated} from "../utils/keystore"
 
 export default function Password({increaseSteps,decreaseSteps}){
     const [pwd1, setPwd1] = useState('')
@@ -58,10 +59,10 @@ export default function Password({increaseSteps,decreaseSteps}){
         return <Spinner/>
     }
     return <div className={PasswordStyle['app-password']}>
-        <h1 className={PasswordStyle['header']}>Wallet Password</h1>
-        <p className={PasswordStyle['intro']}>
+        <h1 className={PasswordStyle['header']}> {isKeystoreWillBeGenerated ? 'Wallet Password':'Setup Password'} </h1>
+        {isKeystoreWillBeGenerated && <p className={PasswordStyle['intro']}>
             Build, sign and send transactions with security and trust.
-        </p>
+        </p>}
         {isSetup ? 
             <SetUpCompleted/>
         :
