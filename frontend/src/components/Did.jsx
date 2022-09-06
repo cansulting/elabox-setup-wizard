@@ -4,9 +4,13 @@ import useDidStore from "../store/did"
 import DidStyle from "../assets/css/did.module.css"
 import ButtonStyle from "../assets/css/button.module.css"
 import SetUpCompleted from "./partials/SetupCompleted"
+import { isKeystoreWillBeGenerated } from "../utils/config"
+import useErrorStore from "../store/error"
+import useWalletStore from "../store/wallet"
 
 export default function Did({increaseSteps,decreaseSteps}){
     const did = useDidStore(state => state.did)
+    const walletConnector = useDidStore(state => state.walletConnector)
     const isProcessingDid = useDidStore(state => state.isProcessingDid)
     const initSetup = useDidStore(state => state.initSetup)
     const isSetup = useDidStore(state => state.isSetup)
@@ -14,6 +18,8 @@ export default function Did({increaseSteps,decreaseSteps}){
     const closeSetup = useDidStore(state => state.closeSetup)
     const processDid = useDidStore (state => state.processDid)    
     const signOut = useDidStore (state => state.signOut)
+    const setWallet = useWalletStore(state => state.setWallet)
+    const toggleWarning = useErrorStore(state => state.toggleWarning)
     const hasDid = did.length > 0
     const handleDidClick = () => {
         if(!isProcessingDid){
@@ -40,6 +46,18 @@ export default function Did({increaseSteps,decreaseSteps}){
         }
         // eslint-disable-next-line
     },[])
+    useEffect(() => {
+        if (!isKeystoreWillBeGenerated && hasDid) {
+            if(walletConnector.chainId !== 20){
+                toggleWarning("Wrong network, only Elastos Smart Chain is supported.")
+                signOut()
+            }
+            else{
+                setWallet(walletConnector.accounts[0])
+            }
+        }    
+        // eslint-disable-next-line            
+    },[hasDid])
     if(isSetup === ""){
         return <Spinner/>
     }    

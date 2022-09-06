@@ -36,12 +36,12 @@ export default class Did {
         if (this.connector.hasWalletConnectSession())
             await this.connector.disconnectWalletConnect()
         const didAccess = new DID.DIDAccess()
-        
         try {
             const presentation = await didAccess.requestCredentials(
                 {claims: [DID.standardNameClaim("Activate elabox", false)]}
             );
-            return presentation
+            const walletConnector = await this.connector.getWalletConnectProvider().getWalletConnector({disableSessionCreation:true})
+            return {presentation,walletConnector}
         } catch (error) {
             console.log(error);
             return null

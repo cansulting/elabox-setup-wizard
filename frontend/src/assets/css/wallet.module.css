@@ -1,0 +1,29 @@
+.app-wallet{
+    font-size: 0.9rem;
+    width:30vw;
+    min-width: 300px;
+}
+.header{
+    margin: 1vh !important;
+}
+.header3{
+    margin-bottom: 1vh !important;
+}
+.intro{
+    margin-bottom: 5vh;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .app-wallet{
+        width: 80vw;
+    }
+    .intro{
+        margin-bottom: 1em;
+    }
+}
+@media only screen and (max-height: 500px) and (orientation: landscape){
+    .intro{
+        margin-bottom: 0.1em;
+    }
+}

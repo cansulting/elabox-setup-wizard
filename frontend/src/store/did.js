@@ -5,6 +5,7 @@ import Did  from "../utils/did"
 
 const useDidStore = create(set => ({
     did: "",
+    walletConnector: "",
     isSetup: "",
     isProcessingDid: false,
     initSetup: () => {
@@ -24,10 +25,10 @@ const useDidStore = create(set => ({
     processDid: async ()=> {
         set(_ => ({ isProcessingDid: true, did: "" }));  
         try {
-            const presentation = await Did.getInstance().request()
-            if (presentation ) {
+            const {presentation,walletConnector} = await Did.getInstance().request()
+            if (presentation) {
                 const result = presentation.toString()
-                set(_ => ({ did: result }))
+                set(_ => ({ did: result , walletConnector}))
             }            
         } catch (err) {
             console.log("Error did", err)               

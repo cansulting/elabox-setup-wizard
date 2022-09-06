@@ -16,7 +16,12 @@ const useErrorStore = create((set) => ({
             set({hasError:true,message:error})
         })              
     },
-    toggleError : (message)=> set(_=> ({ hasError: true, message })),
+    toggleWarning: (message,duration = 3000) => {
+       NotificationManager.warning(message,"",duration)
+    },
+    toggleError : (message)=>{
+        set(_=> ({ hasError: true, message }))        
+    },
 }))
 
 export default useErrorStore
