@@ -1,6 +1,9 @@
 package global
 
-import "github.com/cansulting/elabox-system-tools/foundation/app"
+import (
+	"github.com/cansulting/elabox-system-tools/foundation/app"
+	"github.com/cansulting/elabox-system-tools/foundation/path"
+)
 
 var Controller *app.Controller
 
@@ -13,7 +16,8 @@ const HOME_DIR = "/home/elabox"
 const DID_HASH_PATH = HOME_DIR + "/data/ela.account/did.dat"
 const DID_DATA_DIR = HOME_DIR + "/data/ela.account"
 
-const CLI_DIR_PATH = HOME_DIR + "/apps/ela.mainchain"
+var CLI_DIR_PATH = path.GetSystemAppDir() + "/" + PACKAGE_ID
+
 const KEYSTORE_DIR_PATH = HOME_DIR + "/documents/ela.mainchain"
 const OLD_KEYSTORE_DIR_PATH = HOME_DIR + "/data/ela.mainchain" // for old version of keystore
 const KEYSTORE_FILENAME = "keystore.dat"
