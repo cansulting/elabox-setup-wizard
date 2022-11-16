@@ -27,7 +27,7 @@ const useDidStore = create(set => ({
         try {
             const {presentation,walletConnector} = await Did.getInstance().request()
             if (presentation) {
-                const result = presentation.toString()
+                const result = JSON.stringify(presentation)
                 set(_ => ({ did: result , walletConnector}))
             }            
         } catch (err) {

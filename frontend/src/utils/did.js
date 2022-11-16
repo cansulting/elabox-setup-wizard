@@ -36,16 +36,29 @@ export default class Did {
         if (this.connector.hasWalletConnectSession())
             await this.connector.disconnectWalletConnect()
         const didAccess = new DID.DIDAccess()
+        let result = null
         try {
             const presentation = await didAccess.requestCredentials(
                 {claims: [DID.standardNameClaim("Activate elabox", false)]}
             );
             const walletConnector = await this.connector.getWalletConnectProvider().getWalletConnector({disableSessionCreation:true})
-            return {presentation,walletConnector}
+            result = {presentation,walletConnector}
         } catch (error) {
             console.log(error);
-            return null
         }
+        if (result && result.presentation) {
+            // requires account specially esc
+            const acc = this.connector.getWalletConnectProvider().accounts
+            if (acc === null || acc.length === 0) {
+                throw new Error("No ESC wallet provided")
+            }
+            const strpresentation = result.presentation.toString()
+            const conPresentation = JSON.parse(strpresentation)
+            conPresentation.esc = acc[0]
+            result.presentation = conPresentation
+            //console.log("ACCOUNTS", result)
+        }
+        return result
     }
 
     async signin() {

@@ -24,11 +24,11 @@ export default function Activation({increaseSteps}) {
             <p>Unlock rewards and premium support</p>            
             {currentActivationPage === 0 ? 
             <ActivationPage 
-            handlePageChange={handlePageChange} 
-            handleActivation={handleActivation}/> : 
+                handlePageChange={handlePageChange} 
+                handleActivation={handleActivation}/> : 
             <PurchasePage 
-            increaseSteps={increaseSteps} 
-            handlePurchase={handlePurchase}/>            
+                increaseSteps={increaseSteps} 
+                handlePurchase={handlePurchase}/>            
             }
         </div>   
     )

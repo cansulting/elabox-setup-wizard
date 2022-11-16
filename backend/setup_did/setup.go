@@ -4,7 +4,6 @@ import (
 	"elabox-setup/backend/global"
 	"encoding/json"
 	"errors"
-	"os"
 
 	"github.com/cansulting/elabox-system-tools/foundation/app/rpc"
 	"github.com/cansulting/elabox-system-tools/foundation/event/data"
@@ -22,10 +21,17 @@ func InitDone() {
 
 // return true if already setup
 func WasSetup() bool {
-	if _, err := os.Stat(global.DID_HASH_PATH); err != nil {
+	res, err := global.Controller.RPC.CallRPC(global.ACCOUNT_PACKAGE_ID, data.NewActionById(global.CHECK_DID_SETUP))
+	if err != nil {
+		logger.GetInstance().Error().Err(err).Msg("failed checking DID account")
 		return false
 	}
-	return true
+	result, err := res.ToSimpleResponse()
+	if result.Code != rpc.SUCCESS_CODE || err != nil {
+		logger.GetInstance().Error().Err(err).Msg(result.Message)
+		return false
+	}
+	return result.Message == "setup"
 }
 
 func Setup(presentationStr string) error {

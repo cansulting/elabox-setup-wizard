@@ -13,7 +13,8 @@ const DEFAULT_PASSWORD = DEFAULT_USERNAME
 const ACCOUNT_PACKAGE_ID = "ela.account"
 const PACKAGE_ID = "ela.setup"
 const HOME_DIR = "/home/elabox"
-const DID_HASH_PATH = HOME_DIR + "/data/ela.account/did.dat"
+
+//const DID_HASH_PATH = HOME_DIR + "/data/ela.account/did.dat"
 const DID_DATA_DIR = HOME_DIR + "/data/ela.account"
 
 var CLI_DIR_PATH = path.GetSystemAppDir() + "/" + PACKAGE_ID
@@ -24,11 +25,12 @@ const KEYSTORE_FILENAME = "keystore.dat"
 const TMP_DIR = "/home/tmp"
 
 // actions
-const INIT_SETUP = "setup.actions.INIT"          // initialize setup
-const INITDONE_SETUP = "setup.actions.INIT_DONE" // done initialize
-const START_SETUP = "setup.actions.START"        // start the setup
-const CHECK_SETUP = "setup.actions.CHECK_STATUS" // use to check is device setup status
-const SETUP_DID = "account.actions.DID_SETUP"
+const INIT_SETUP = "setup.actions.INIT"                   // initialize setup
+const INITDONE_SETUP = "setup.actions.INIT_DONE"          // done initialize
+const START_SETUP = "setup.actions.START"                 // start the setup
+const CHECK_SETUP = "setup.actions.CHECK_STATUS"          // use to check is device setup status
+const SETUP_DID = "account.actions.DID_SETUP"             //
+const CHECK_DID_SETUP = "account.actions.DID_SETUP_CHECK" // was did setup?
 
 // broadcast actions
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed

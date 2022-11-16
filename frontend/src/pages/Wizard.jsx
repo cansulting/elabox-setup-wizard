@@ -45,8 +45,12 @@ export default function Wizard(){
             onBeginSetup()
         } else { 
             const isConfigRoute = window.location.href.includes("/config")
-            if(!isConfigRoute || setupInitiated){
+            if(!isConfigRoute){
                 if (setupStatus === SETUP_DONE)
+                    setStep(7)
+            } else {
+                // is config and setup finished?
+                if (steps === 6 && setupStatus === SETUP_DONE)
                     setStep(7)
             }
         }
