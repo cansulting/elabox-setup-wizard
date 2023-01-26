@@ -41,7 +41,6 @@ echo "Start building Setup Wizard $mode..."
 pkid=$(jq '.packageId' ../build/info.json)
 eval "$gobuild" -o ../build/bin/$pkid ../backend 
 
-
 # build react
 echo "Compiling frontend..."
 cd ../frontend

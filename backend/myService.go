@@ -111,7 +111,7 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 			return
 		}
 		if !setup_keystore.WasSetup() {
-			if err := setup_keystore.Setup(datam["password"].(string), datam["skipKeystoreGeneration"].(bool)); err != nil {
+			if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
 				broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
 				return
 			}

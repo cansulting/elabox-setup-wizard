@@ -1,16 +1,13 @@
 package setup_keystore
 
 import (
-	"elabox-setup/backend/global"
 	"errors"
 	"fmt"
 	"io"
-	"os"
 	"os/exec"
 	"strings"
 
 	"github.com/cansulting/elabox-system-tools/foundation/logger"
-	"github.com/cansulting/elabox-system-tools/foundation/perm"
 	"github.com/cansulting/elabox-system-tools/foundation/system"
 )
 
@@ -44,25 +41,25 @@ func CheckPassErrors(pass string) error {
 }
 
 // use to generate keystore
-func generateKeystore(pass string) error {
-	logger.GetInstance().Debug().Msg("generating keystore")
-	dir, _ := os.Getwd()
-	cliPath := dir + "/ela-cli"
-	if err := os.MkdirAll(global.KEYSTORE_DIR_PATH, perm.PUBLIC_WRITE); err != nil {
-		return errors.New("unable to create dir, " + err.Error())
-	}
-	// step: exec cli
-	cmd := exec.Command(cliPath,
-		"wallet",
-		"create",
-		"-p",
-		pass,
-	)
-	cmd.Dir = global.KEYSTORE_DIR_PATH
-	contents, err := cmd.CombinedOutput()
-	logger.GetInstance().Debug().Msg(string(contents))
-	return err
-}
+// func generateKeystore(pass string) error {
+// 	logger.GetInstance().Debug().Msg("generating keystore")
+// 	dir, _ := os.Getwd()
+// 	cliPath := dir + "/ela-cli"
+// 	if err := os.MkdirAll(global.KEYSTORE_DIR_PATH, perm.PUBLIC_WRITE); err != nil {
+// 		return errors.New("unable to create dir, " + err.Error())
+// 	}
+// 	// step: exec cli
+// 	cmd := exec.Command(cliPath,
+// 		"wallet",
+// 		"create",
+// 		"-p",
+// 		pass,
+// 	)
+// 	cmd.Dir = global.KEYSTORE_DIR_PATH
+// 	contents, err := cmd.CombinedOutput()
+// 	logger.GetInstance().Debug().Msg(string(contents))
+// 	return err
+// }
 
 func changeSystemPassword(pass string) error {
 	logger.GetInstance().Debug().Msg("updating password")
@@ -83,7 +80,7 @@ func changeSystemPassword(pass string) error {
 	return nil
 }
 
-func Setup(password string, skipkeystoregeneration bool) error {
+func Setup(password string) error {
 	if password == "" {
 		logger.GetInstance().Debug().Msg("password setup skiped.")
 		return nil
@@ -91,13 +88,13 @@ func Setup(password string, skipkeystoregeneration bool) error {
 	if err := CheckPassErrors(password); err != nil {
 		return err
 	}
-	if skipkeystoregeneration {
-		logger.GetInstance().Debug().Msg("keystore generation skipped.")
-	} else {
-		if err := generateKeystore(password); err != nil {
-			return errors.New("failed to generate keystore. " + err.Error())
-		}
-	}
+	// if skipkeystoregeneration {
+	// 	logger.GetInstance().Debug().Msg("keystore generation skipped.")
+	// } else {
+	// 	if err := generateKeystore(password); err != nil {
+	// 		return errors.New("failed to generate keystore. " + err.Error())
+	// 	}
+	// }
 	if err := changeSystemPassword(password); err != nil {
 		return errors.New("failed changed system password, " + err.Error())
 	}

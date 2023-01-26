@@ -11,7 +11,6 @@ const Did = lazy(() => import('../components/Did'))
 const Password = lazy(() => import('../components/Password'))
 const SetUp = lazy(() => import('../components/SetUp'))
 const Finished = lazy(() => import('../components/Finished'))
-const KeyStore = lazy(() => import("../components/Keystore"))
 const Activation  = lazy(() => import("../components/Activation"))
 
 const SETUP_DONE = 'setup'
@@ -25,19 +24,11 @@ export default function Wizard(){
     const increaseSteps = useStepsStore(state => state.increaseSteps)
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
     const setStep = useStepsStore( state => state.setStep)
-    const [dlkey, setDlkey] = useState(false)
     const [setupInitiated, setSetupInitiated] = useState(false)
     const onBeginSetup = () => {
         setSetupInitiated(true)
         startSetup()
-        if (isKeystoreWillBeGenerated){
-            setDlkey(true)
-        }
         setStep(6)
-    }
-    // called after downloaded the keystore
-    const onDownloadedKey = () => {
-        setDlkey(false)        
     }
     useEffect(() => {
         initSetup()
@@ -65,8 +56,7 @@ export default function Wizard(){
             {steps === 4 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
             {steps === 5 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
             {steps === 6 && <SetUp/>}             
-            {steps === 7 && dlkey && <KeyStore increaseSteps={onDownloadedKey}/>}   
-            {steps === 7 && !dlkey && <Finished />}                                  
+            {steps === 7 && <Finished />}                                  
         </Suspense>
     </div>
 }
