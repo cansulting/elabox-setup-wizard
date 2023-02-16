@@ -31,6 +31,7 @@ const START_SETUP = "setup.actions.START"                 // start the setup
 const CHECK_SETUP = "setup.actions.CHECK_STATUS"          // use to check is device setup status
 const SETUP_DID = "account.actions.DID_SETUP"             //
 const CHECK_DID_SETUP = "account.actions.DID_SETUP_CHECK" // was did setup?
+const USER_ACCOUNT_SETUP = "account.actions.ACC_SETUP"    // action id use to setup account
 
 // broadcast actions
 const BROADCAST_STORAGE_CHANGED = "setup.broadcast.STORAGE_CHANGED" // broadcast when storage list changed

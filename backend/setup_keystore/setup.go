@@ -95,8 +95,8 @@ func Setup(password string) error {
 	// 		return errors.New("failed to generate keystore. " + err.Error())
 	// 	}
 	// }
-	if err := changeSystemPassword(password); err != nil {
-		return errors.New("failed changed system password, " + err.Error())
-	}
+	// if err := changeSystemPassword(password); err != nil {
+	// 	return errors.New("failed changed system password, " + err.Error())
+	// }
 	return nil
 }

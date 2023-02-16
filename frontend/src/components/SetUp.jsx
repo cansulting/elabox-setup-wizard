@@ -18,7 +18,7 @@ export default function SetUp(){
         const data = {
             did,
             wallet_address: wallet,            
-            password,
+            pass: password,
             storage_id,
             skipKeystoreGeneration: isKeystoreWillBeGenerated
         }

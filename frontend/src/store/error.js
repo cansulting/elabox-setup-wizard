@@ -3,7 +3,7 @@ import {NotificationManager} from 'react-notifications';
 import ElaboxEvent from "../utils/ElaboxEvent"
 import * as constant from "../utils/constant"
 
-const useErrorStore = create((set) => ({
+const useErrorStore = create((set, get) => ({
     hasError:false,
     message: "",
     initSetup: () =>{
@@ -12,14 +12,16 @@ const useErrorStore = create((set) => ({
             if(code === constant.DOWNLOAD_FILE_ERROR_CODE ){
                 NotificationManager.error(error)
              return   
-            }            
-            set({hasError:true,message:error})
+            }         
+            get().toggleError(error)   
+            //set({hasError:true,message:error})
         })              
     },
     toggleWarning: (message,duration = 3000) => {
        NotificationManager.warning(message,"",duration)
     },
     toggleError : (message)=>{
+        console.error("setup failed", message)
         set(_=> ({ hasError: true, message }))        
     },
 }))

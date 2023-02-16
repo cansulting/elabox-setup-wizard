@@ -6,6 +6,7 @@ import (
 	"elabox-setup/backend/setup_did"
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
+	"elabox-setup/backend/setup_useracc"
 	"elabox-setup/backend/utils"
 	"time"
 
@@ -106,16 +107,30 @@ func (instance *MyService) setup(client protocol.ClientInterface, action data.Ac
 				return
 			}
 		}
-		if err := setup_did.Setup(datam["did"].(string)); err != nil {
-			broadcast.PublishError(rpc.INVALID_CODE, "did setup failed, "+err.Error())
-			return
-		}
-		if !setup_keystore.WasSetup() {
-			if err := setup_keystore.Setup(datam["password"].(string)); err != nil {
-				broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
+		// setup did directly if account was already setup
+		if setup_useracc.WasSetup() {
+			if err := setup_did.Setup(datam["did"].(string)); err != nil {
+				broadcast.PublishError(rpc.INVALID_CODE, "did setup failed, "+err.Error())
+				return
+			}
+		} else {
+			did := ""
+			if datam["did"] != nil {
+				did = datam["did"].(string)
+			}
+			// account not yet setup then setup
+			if err := setup_useracc.Setup(did, datam["pass"].(string)); err != nil {
+				broadcast.PublishError(rpc.INVALID_CODE, "did setup failed, "+err.Error())
 				return
 			}
 		}
+		// commented, let account manager handle the system credentials setup
+		// if !setup_keystore.WasSetup() {
+		// 	if err := setup_keystore.Setup(datam["did"].(string)); err != nil {
+		// 		broadcast.PublishError(rpc.INVALID_CODE, "keystore setup failed, "+err.Error())
+		// 		return
+		// 	}
+		// }
 		if err := SetupSwapping(); err != nil {
 			broadcast.PublishError(rpc.INVALID_CODE, "memory swapping setup failed, "+err.Error())
 			return
@@ -154,6 +169,7 @@ func (instance *MyService) downloadFile(client protocol.ClientInterface, action 
 	}
 	return rpc.CreateSuccessResponse(text)
 }
+
 func (instance *MyService) getInfo(client protocol.ClientInterface, action data.Action) string {
 	var text = ""
 	var err error

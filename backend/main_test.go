@@ -5,7 +5,6 @@ import (
 	"elabox-setup/backend/setup_keystore"
 	"elabox-setup/backend/setup_usb"
 	"elabox-setup/backend/utils"
-	"os"
 	"testing"
 	"time"
 
@@ -27,28 +26,28 @@ func Test_Usb(t *testing.T) {
 }
 
 // expected an issue while generating keystore
-func Test_KeystoreGen_Failure(t *testing.T) {
-	logger.Init("ela.setup.test")
-	if err := setup_keystore.Setup("erwr", true); err == nil {
-		t.Error("expected an error for password but nothing was recieved")
-	}
-}
+// func Test_KeystoreGen_Failure(t *testing.T) {
+// 	logger.Init("ela.setup.test")
+// 	if err := setup_keystore.Setup("erwr", true); err == nil {
+// 		t.Error("expected an error for password but nothing was recieved")
+// 	}
+// }
 
-func Test_KeystoreGen_Success(t *testing.T) {
-	logger.Init("ela.setup.test")
-	if wassetup := setup_keystore.WasSetup(); wassetup {
-		t.Log("keystore was already setup, process skipped")
-		return
-	}
-	wd, _ := os.Getwd()
-	if err := os.Chdir(wd + "/../build/bin"); err != nil {
-		t.Error(err)
-		return
-	}
-	if err := setup_keystore.Setup("helloworld", true); err != nil {
-		t.Error(err)
-	}
-}
+// func Test_KeystoreGen_Success(t *testing.T) {
+// 	logger.Init("ela.setup.test")
+// 	if wassetup := setup_keystore.WasSetup(); wassetup {
+// 		t.Log("keystore was already setup, process skipped")
+// 		return
+// 	}
+// 	wd, _ := os.Getwd()
+// 	if err := os.Chdir(wd + "/../build/bin"); err != nil {
+// 		t.Error(err)
+// 		return
+// 	}
+// 	if err := setup_keystore.Setup("helloworld", true); err != nil {
+// 		t.Error(err)
+// 	}
+// }
 func Test_DidSetup(t *testing.T) {
 	logger.Init("ela.setup.test")
 	if err := setup_did.Setup(`{"holder":"this is a sample did"}`); err != nil {
