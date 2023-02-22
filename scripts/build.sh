@@ -35,6 +35,7 @@ else
     mode=DEBUG
 fi
 
+echo "OS=$target Arch=$arch Mode=$mode"
 echo "Start building Setup Wizard $mode..."
 
 # build backend 
@@ -44,7 +45,9 @@ eval "$gobuild" -o ../build/bin/$pkid ../backend
 # build react
 echo "Compiling frontend..."
 cd ../frontend
-npm install
+if [ ! -d "../frontend/node_modules" ]; then
+    npm install
+fi
 npm run build
 rm -r ../build/www && mkdir -p ../build/www
 mv ./build/* ../build/www
