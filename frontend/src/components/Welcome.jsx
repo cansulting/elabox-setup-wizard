@@ -5,7 +5,13 @@ import useSetupStore from "../store/setUp"
 export default function Welcome({increaseSteps}){
     const isSubscribe = useSetupStore(state=>state.isSubscribe)
     const handleNextClick = async () =>{
-        const res = await isActivated()
+        let res = null
+        try {
+            res = await isActivated()
+        } catch (error) {
+            console.log("Failed checking is already activated", res)
+        }
+         
         if(res) {
             increaseSteps(2)
             return
