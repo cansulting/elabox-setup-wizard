@@ -7,16 +7,25 @@ const useSetupStore = create(set => ({
     isSubscribe:false,
     setupStatus: "unknown", // can be setup, setting_up, upsetup 
     initSetup: () =>{
-        ElaboxEvent.subscribe(constant.PACKAGE_ID,(args) => {
-            set(state=>({isSubscribe:true}))
+        set( state => {
+            if (state.setupStatus !== "unknown") return
+            ElaboxEvent.subscribe(constant.PACKAGE_ID,(args) => {
+                set(state=>({isSubscribe:true}))
+            })
+            ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SETUP)
+                .then( res => set( _ => ({setupStatus:res.message})))    
+            ElaboxEvent.onAction(
+                constant.BROADCAST_SUCCESS, 
+                (_) => set(_ => {
+                    console.log("SUCCESS")
+                    return {setupStatus:"setup"}
+                }))
+            return {setupStatus:"..."}    
         })
-        ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SETUP)
-            .then( res => set( _ => ({setupStatus:res.message})))    
-        ElaboxEvent.onAction(
-            constant.BROADCAST_SUCCESS, 
-            (_) => set(_ => ({setupStatus:"setup"})))                
+                    
     },
     processSetUp: data => {
+        console.log("PROCESS SETUP")
         return ElaboxEvent.sendRPC(constant.PACKAGE_ID,constant.START_SETUP,"",data)
     },
     startSetup: () => {
