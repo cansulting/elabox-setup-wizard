@@ -1,5 +1,4 @@
 import {lazy, Suspense, useEffect, useState} from "react"
-import { isKeystoreWillBeGenerated } from "../utils/config"
 import useStepsStore from "../store/steps"
 import useSetupStore from "../store/setUp"
 import WizardStyle from "../assets/css/wizard.module.css"
@@ -24,6 +23,8 @@ export default function Wizard(){
     const increaseSteps = useStepsStore(state => state.increaseSteps)
     const decreaseSteps = useStepsStore(state => state.decreaseSteps)
     const setStep = useStepsStore( state => state.setStep)
+    const version_type = useSetupStore( state => state.version_type)
+    const isLiteVersion = version_type === "lite"
     const [setupInitiated, setSetupInitiated] = useState(false)
     const onBeginSetup = () => {
         setSetupInitiated(true)
@@ -52,11 +53,21 @@ export default function Wizard(){
             <Logo/>            
             {steps === 1 && <Welcome increaseSteps={increaseSteps}/>}
             {steps === 2 && <Activation increaseSteps={increaseSteps}/>}
-            {steps === 3 && <Storage decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
-            {steps === 4 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
-            {steps === 5 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
-            {steps === 6 && <SetUp/>}             
-            {steps === 7 && <Finished />}                                  
+            { !isLiteVersion && <>
+                {steps === 3 && <Storage decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
+                {steps === 4 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
+                {steps === 5 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
+                {steps === 6 && <SetUp/>}             
+                {steps === 7 && <Finished />}    
+                </>
+            }      
+            { isLiteVersion && <>
+                {steps === 3 && <Did decreaseSteps={decreaseSteps} increaseSteps={increaseSteps}/>}
+                {steps === 4 && <Password decreaseSteps={decreaseSteps} increaseSteps={onBeginSetup}/>}        
+                {steps === 5 && <SetUp/>}             
+                {steps >= 6 && <Finished />} 
+            </>
+            }                        
         </Suspense>
     </div>
 }
