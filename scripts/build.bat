@@ -58,6 +58,7 @@ cd ..\\frontend
 if not exist "..\\frontend\\node_modules" (
     npm install
 )
+set NODE_OPTIONS=--openssl-legacy-provider
 npm run build
 if exist "..\\build\\www" (
     rmdir /s /q "..\\build\\www"
