@@ -31,6 +31,7 @@ export const DOWNLOAD_KEYSTORE = "DOWNLOAD_KEYSTORE"
 export const rewards = "ela.rewards"
 export const REGISTERDEVICE_ACTION = "ela.reward.actions.REGISTER_DEVICE"
 export const CHECK_DEVICE_ACTION = "ela.reward.actions.CHECK_DEVICE"
+export const CHECK_SYSTEM_VERSION_TYPE = "ela.action.CHECK_VERSION_TYPE"
 
 export const INSTALLER_PKID = "ela.installer"
 export const SERVICE_ID = "ela.system"

@@ -25,6 +25,7 @@ func WasSetup() bool {
 func Setup(presentationStr string, password string) error {
 	callParams := make(map[string]interface{})
 	callParams["pass"] = password
+	callParams["presentation"] = presentationStr
 	res, _ := global.Controller.RPC.CallRPC(
 		global.ACCOUNT_PACKAGE_ID,
 		data.NewAction(global.USER_ACCOUNT_SETUP, "", callParams))

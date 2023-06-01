@@ -6,6 +6,7 @@ const useSetupStore = create(set => ({
     isetUpCompleted:false,    
     isSubscribe:false,
     setupStatus: "unknown", // can be setup, setting_up, upsetup 
+    version_type: "standard", //
     initSetup: () =>{
         set( state => {
             if (state.setupStatus !== "unknown") return
@@ -13,7 +14,9 @@ const useSetupStore = create(set => ({
                 set(state=>({isSubscribe:true}))
             })
             ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SETUP)
-                .then( res => set( _ => ({setupStatus:res.message})))    
+                .then( res => set( _ => ({setupStatus:res.message})))   
+            ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SYSTEM_VERSION_TYPE)
+                .then( res => set( _ => ({version_type:res.message})))    
             ElaboxEvent.onAction(
                 constant.BROADCAST_SUCCESS, 
                 (_) => set(_ => {
