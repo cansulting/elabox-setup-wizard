@@ -49,12 +49,13 @@ export default class Did {
         if (result && result.presentation) {
             // requires account specially esc
             const acc = this.connector.getWalletConnectProvider().accounts
-            if (acc === null || acc.length === 0) {
-                throw new Error("No ESC wallet provided")
-            }
+            // if (acc === null || acc.length === 0) {
+            //     throw new Error("No ESC wallet provided")
+            // }
             const strpresentation = result.presentation.toString()
             const conPresentation = JSON.parse(strpresentation)
-            conPresentation.esc = acc[0]
+            if (acc !== null && acc.length > 0)
+                conPresentation.esc = acc[0]
             result.presentation = conPresentation
             //console.log("ACCOUNTS", result)
         }

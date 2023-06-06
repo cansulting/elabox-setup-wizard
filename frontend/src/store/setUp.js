@@ -15,7 +15,7 @@ const useSetupStore = create(set => ({
             })
             ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SETUP)
                 .then( res => set( _ => ({setupStatus:res.message})))   
-            ElaboxEvent.sendRPC(constant.PACKAGE_ID, constant.CHECK_SYSTEM_VERSION_TYPE)
+            ElaboxEvent.sendSystemRPC(constant.CHECK_SYSTEM_VERSION_TYPE)
                 .then( res => set( _ => ({version_type:res.message})))    
             ElaboxEvent.onAction(
                 constant.BROADCAST_SUCCESS, 
