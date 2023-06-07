@@ -29,7 +29,10 @@ export default function Wizard(){
     const onBeginSetup = () => {
         setSetupInitiated(true)
         startSetup()
-        setStep(6)
+        if (!isLiteVersion)
+            setStep(6)
+        else 
+            setStep(5)
     }
     useEffect(() => {
         initSetup()
