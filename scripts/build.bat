@@ -59,11 +59,12 @@ if not exist "..\\frontend\\node_modules" (
     npm install
 )
 set NODE_OPTIONS=--openssl-legacy-provider
-npm run build
+call npm run build
 if exist "..\\build\\www" (
     rmdir /s /q "..\\build\\www"
 )
 mkdir "..\\build\\www"
-move ".\\build\\*" "..\\build\\www"
+xcopy ".\\build" "..\\build\\www" /E
 
 packager ..\\build\\packager.json
+echo Done.
